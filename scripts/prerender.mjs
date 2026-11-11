@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -16,7 +16,7 @@ const esc = (value) =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
-function headHtml(head, route) {
+function headHtml(head, route, extra = []) {
   const robots = head.robots ?? "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
   const json = JSON.stringify({ "@context": "https://schema.org", "@graph": head.jsonLd }).replace(/</g, "\\u003c");
   const locale = head.lang === "en" ? "en_US" : "it_IT";
@@ -44,6 +44,7 @@ function headHtml(head, route) {
     `<meta name="twitter:description" content="${esc(head.description)}" />`,
     `<meta name="twitter:image" content="${esc(head.image)}" />`,
     `<script type="application/ld+json" id="corax-jsonld">${json}</script>`,
+    ...extra,
   ];
 
   return parts.join("\n    ");
@@ -110,13 +111,30 @@ async function main() {
     template.replace(/<!--seo-fallback-->[\s\S]*?<!--\/seo-fallback-->/g, ""),
   );
 
+  // The 3D atrium is the whole page on /esperienza: fetch its chunk in parallel
+  // with the app bundle instead of waiting for hydration + lazy import.
+  const assetFiles = await readdir(path.join(dist, "assets"));
+  const velaChunk = assetFiles.find((file) => /^VelaScene-.*\.js$/.test(file));
+  const velaPreload = velaChunk
+    ? `<link rel="modulepreload" crossorigin href="/assets/${velaChunk}" />`
+    : null;
+
   let count = 0;
   for (const route of allPaths) {
     const appHtml = render(route);
     const head = getHead(route);
     const html = cleanTemplate
       .replace(/<html lang="[^"]*"/, `<html lang="${head.lang === "en" ? "en" : "it-IT"}"`)
-      .replace("<!--app-head-->", headHtml(head, route))
+      .replace(
+        "<!--app-head-->",
+        headHtml(
+          head,
+          route,
+          velaPreload && (route === "/esperienza" || route === "/en/experience")
+            ? [velaPreload]
+            : [],
+        ),
+      )
       .replace("<!--app-html-->", appHtml);
 
     if (route === "/") {

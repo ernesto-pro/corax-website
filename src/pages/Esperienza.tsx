@@ -242,12 +242,15 @@ export function Esperienza() {
   const [mounted, setMounted] = useState(false);
   const [sceneReady, setSceneReady] = useState(false);
   const [sceneFailed, setSceneFailed] = useState(false);
+  const [entered, setEntered] = useState(false);
   const [reduced, setReduced] = useState(false);
   const [active, setActive] = useState<string | null>(null);
 
   const activeRef = useRef<string | null>(null);
-  const labelsRef = useRef<HTMLDivElement>(null);
+  const hoverRef = useRef<string | null>(null);
   const lastFocus = useRef<HTMLElement | null>(null);
+  const skipRef = useRef<(() => void) | null>(null);
+  const [hoverSlug, setHoverSlug] = useState<string | null>(null);
 
   const activeUnit = active ? getVelaUnit(active) : undefined;
 
@@ -289,11 +292,17 @@ export function Esperienza() {
       ? t("Scena 3D · La Vela")
       : !sceneReady
         ? t("Apro la scena…")
-        : t("Scena attiva · trascina per orbitare");
+        : !entered
+          ? t("Ingresso nell'atrio…")
+          : t("Scena attiva · 4 isole · trascina per orbitare");
 
   return (
     <>
-      <section className="vela-stage" id="atrio" aria-labelledby="vela-title">
+      <section
+        className={`vela-stage${sceneReady && !sceneFailed ? " is-live" : ""}`}
+        id="atrio"
+        aria-labelledby="vela-title"
+      >
         <div className="vela-stage__bg" aria-hidden />
         <div className="vela-stage__canvas">
           {mounted && !sceneFailed && (
@@ -302,14 +311,27 @@ export function Esperienza() {
                 <VelaScene
                   nodes={velaSceneNodes}
                   activeRef={activeRef}
-                  labelsRef={labelsRef}
+                  hoverRef={hoverRef}
                   onSelect={(slug) => openUnit(slug)}
+                  onHover={setHoverSlug}
                   onFail={() => setSceneFailed(true)}
                   onReady={() => setSceneReady(true)}
+                  onEntered={() => setEntered(true)}
+                  skipRef={skipRef}
                   reduced={reduced}
                 />
               </Suspense>
             </SceneBoundary>
+          )}
+
+          {sceneReady && !sceneFailed && !entered && (
+            <button
+              type="button"
+              className="vela-stage__skip-intro"
+              onClick={() => skipRef.current?.()}
+            >
+              {t("Salta l'ingresso")}
+            </button>
           )}
         </div>
         <div className="vela-stage__vignette" aria-hidden />
@@ -341,6 +363,17 @@ export function Esperienza() {
             <a className="vela-stage__skip" href="#atlante">
               {t("Salta all'atlante testuale")} <ArrowUpRight size={14} aria-hidden />
             </a>
+            <ol className="vela-stage__guide" aria-label={t("Come funziona l'atrio")}>
+              <li>
+                <span aria-hidden>01</span> {t("Trascina per orbitare")}
+              </li>
+              <li>
+                <span aria-hidden>02</span> {t("Apri un'isola o una voce")}
+              </li>
+              <li>
+                <span aria-hidden>03</span> {t("Scorri per l'atlante")}
+              </li>
+            </ol>
             <p className="vela-stage__fallback">
               {sceneFailed
                 ? t(
@@ -353,50 +386,46 @@ export function Esperienza() {
           </div>
         </div>
 
-        <div className="vela-labels" ref={labelsRef} aria-hidden="true">
-          {velaUnits.map((unit) => (
-            <span
-              key={unit.slug}
-              className="vela-label"
-              data-node={unit.slug}
-              style={{ ["--accent" as string]: unit.accent }}
-            >
-              <span className="vela-label__index">{unit.index}</span>
-              <span className="vela-label__body">
-                <span className="vela-label__name">{unit.name}</span>
-                <span className="vela-label__kicker">
-                  {unitHints[unit.slug] ? t(unitHints[unit.slug]) : unit.kicker}
-                </span>
-              </span>
-              <span className="vela-label__arrow" aria-hidden>
-                <ArrowUpRight size={15} strokeWidth={1.5} />
-              </span>
-            </span>
-          ))}
-        </div>
-
-        <div className="vela-stage__dock" role="group" aria-label={t("Scegli una unit")}>
-          {velaUnits.map((unit) => (
-            <a
-              key={unit.slug}
-              href={to(unit.href)}
-              className="vela-dock__item"
-              style={{ ["--accent" as string]: unit.accent }}
-              onClick={(event) => {
-                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-                event.preventDefault();
-                openUnit(unit.slug, event.currentTarget);
-              }}
-              aria-haspopup="dialog"
-              aria-label={`${t("Apri")} ${unit.name} — ${unit.kicker}`}
-              data-unit={unit.slug}
-            >
-              <span className="vela-dock__index">{unit.index}</span>
-              <span className="vela-dock__name">{unit.name}</span>
-              <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden />
-            </a>
-          ))}
-        </div>
+        <nav className="vela-index" aria-label={t("Le isole della Vela")}>
+          <p className="vela-index__title">
+            <span>{t("La mappa dell'atrio")}</span>
+            <span aria-hidden>{String(velaUnits.length).padStart(2, "0")}</span>
+          </p>
+          <ul>
+            {velaUnits.map((unit) => (
+              <li key={unit.slug}>
+                <Link
+                  to={to(unit.href)}
+                  className={`vela-index__row ${hoverSlug === unit.slug ? "is-hot" : ""}`}
+                  style={{ ["--accent" as string]: unit.accent }}
+                  data-unit={unit.slug}
+                  onPointerEnter={() => {
+                    hoverRef.current = unit.slug;
+                  }}
+                  onPointerLeave={() => {
+                    hoverRef.current = null;
+                  }}
+                  onFocus={() => {
+                    hoverRef.current = unit.slug;
+                  }}
+                  onBlur={() => {
+                    hoverRef.current = null;
+                  }}
+                >
+                  <span className="vela-index__num">{unit.index}</span>
+                  <span className="vela-index__body">
+                    <strong>{unit.name}</strong>
+                    <em>{unitHints[unit.slug] ? t(unitHints[unit.slug]) : unit.kicker}</em>
+                  </span>
+                  <ArrowUpRight size={15} strokeWidth={1.5} aria-hidden />
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="vela-index__hint">
+            {t("Le voci aprono la pagina. Le isole aprono la scheda.")}
+          </p>
+        </nav>
 
         <div className="vela-stage__units" aria-label={t("Le quattro unit")}>
           {velaUnits.map((unit) => (
@@ -405,13 +434,7 @@ export function Esperienza() {
               href={to(unit.href)}
               className="vela-mobile-unit"
               style={{ ["--accent" as string]: unit.accent }}
-              onClick={(event) => {
-                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-                event.preventDefault();
-                openUnit(unit.slug, event.currentTarget);
-              }}
-              aria-haspopup="dialog"
-              aria-label={`${t("Apri")} ${unit.name} — ${unit.kicker}`}
+              aria-label={`${t("Vai a")} ${unit.name} — ${unit.kicker}`}
               data-unit={unit.slug}
             >
               <span className="vela-mobile-unit__index">{unit.index}</span>
@@ -426,7 +449,7 @@ export function Esperienza() {
           <p className="vela-stage__hint">
             <Move size={15} strokeWidth={1.6} aria-hidden />
             {sceneReady && !sceneFailed
-              ? t("Trascina per orbitare · passa sulle isole · scegli una unit")
+              ? t("Trascina per orbitare · clicca un'isola per la scheda")
               : t("Scegli una unit · esplora l'atlante")}
           </p>
           <dl className="vela-stage__numbers">
@@ -445,6 +468,7 @@ export function Esperienza() {
             <span className="vela-stage__bar" aria-hidden />
           </div>
         )}
+
       </section>
 
       <section className="section section--dark vela-atlas" id="atlante">

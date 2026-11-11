@@ -25,6 +25,12 @@ export const esperienzaCopy: Record<string, string> = {
   "talenti e tutti i casi, disposti nello spazio come li pensiamo davvero. Muoviti, avvicinati, apri una porta.":
     "talents and every case, arranged in space the way we actually think about them. Move, get closer, open a door.",
   "Salta all'atlante testuale": "Skip to the text atlas",
+  "Come funziona l'atrio": "How the atrium works",
+  "Trascina per orbitare": "Drag to orbit",
+  "Apri un'isola o una voce": "Open an island or an entry",
+  "Scorri per l'atlante": "Scroll for the atlas",
+  "Salta l'ingresso": "Skip the entrance",
+  "Ingresso nell'atrio…": "Entering the atrium…",
   "Il tuo browser non supporta WebGL: qui sotto trovi tutto il sistema in forma di atlante, senza perdere un contenuto.":
     "Your browser doesn't support WebGL: below you'll find the whole system as an atlas, with nothing lost.",
   "La scena è un livello espressivo. Tutto quello che vedi nello spazio è raccolto anche nell'atlante qui sotto, in forma leggibile e indicizzabile.":
@@ -33,7 +39,16 @@ export const esperienzaCopy: Record<string, string> = {
   // Unit navigation
   "Scegli una unit": "Choose a unit",
   Apri: "Open",
+  "Vai a": "Go to",
   "Le quattro unit": "The four units",
+  "Le isole della Vela": "The islands of La Vela",
+  "La mappa dell'atrio": "The atrium map",
+  "Le voci aprono la pagina. Le isole aprono la scheda.":
+    "Rows open the page. The islands open the panel.",
+  "Trascina per orbitare · clicca un'isola per la scheda":
+    "Drag to orbit · click an island for the panel",
+  "Scena attiva · 4 isole · trascina per orbitare":
+    "Scene live · 4 islands · drag to orbit",
   "Trascina per orbitare · passa sulle isole · scegli una unit":
     "Drag to orbit · hover the islands · choose a unit",
   "Scegli una unit · esplora l'atlante": "Choose a unit · explore the atlas",

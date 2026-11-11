@@ -6,32 +6,50 @@ export type SceneNode = { slug: string; angle: number; accent: string };
 type Props = {
   nodes: SceneNode[];
   activeRef: React.RefObject<string | null>;
-  labelsRef: React.RefObject<HTMLDivElement | null>;
+  /** Island hovered from the HTML map, mirrored inside the scene. */
+  hoverRef?: React.RefObject<string | null>;
   onSelect: (slug: string) => void;
+  onHover?: (slug: string | null) => void;
   onFail?: () => void;
   onReady?: () => void;
+  onEntered?: () => void;
+  /** Filled by the scene so the host page can offer a "skip the entrance" control. */
+  skipRef?: React.RefObject<(() => void) | null>;
   reduced: boolean;
 };
 
-const NODE_R = 4.7;
-const NODE_Y = 0.55;
+const NODE_R = 4.45;
+const NODE_Y = 0.95;
+
+/** How long the entrance lasts, in ms. Slow enough to read, short enough to browse. */
+const INTRO_MS = 2700;
+const INTRO_KEY = "corax-vela-entered";
+
+const easeOutQuart = (x: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 4);
 
 export default function VelaScene({
   nodes,
   activeRef,
-  labelsRef,
+  hoverRef,
   onSelect,
+  onHover,
   onFail,
   onReady,
+  onEntered,
+  skipRef,
   reduced,
 }: Props) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const selectRef = useRef(onSelect);
   const failRef = useRef(onFail);
   const readyRef = useRef(onReady);
+  const enteredRef = useRef(onEntered);
+  const hoverCbRef = useRef(onHover);
   selectRef.current = onSelect;
   failRef.current = onFail;
   readyRef.current = onReady;
+  enteredRef.current = onEntered;
+  hoverCbRef.current = onHover;
 
   useEffect(() => {
     const host = hostRef.current;
@@ -40,7 +58,7 @@ export default function VelaScene({
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
-        antialias: true,
+        antialias: window.innerWidth >= 760,
         alpha: true,
         powerPreference: "high-performance",
       });
@@ -54,7 +72,9 @@ export default function VelaScene({
     }
 
     const small = window.innerWidth < 760;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, small ? 1.5 : 1.8));
+    const dprCap = Math.min(window.devicePixelRatio || 1, small ? 1.5 : 1.75);
+    let dpr = dprCap;
+    renderer.setPixelRatio(dpr);
     renderer.setClearColor(0x08070d, 0);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.06;
@@ -160,7 +180,7 @@ export default function VelaScene({
       mesh.rotation.x = spec.tilt;
       mesh.rotation.y = i * 0.5;
       core.add(mesh);
-      return { mesh, spin: spec.spin };
+      return { mesh, spin: spec.spin, baseOpacity: spec.opacity, mat };
     });
 
     /* Floor */
@@ -220,7 +240,7 @@ export default function VelaScene({
     const disc = new THREE.Mesh(discGeo, discMat);
     disc.rotation.x = -Math.PI / 2;
     disc.position.y = 0.004;
-    root.add(disc);
+    floor.add(disc);
 
     /* Nodes */
     type NodeObj = {
@@ -231,19 +251,21 @@ export default function VelaScene({
       baseMat: THREE.MeshStandardMaterial;
       ringMat: THREE.MeshBasicMaterial;
       beamMat: THREE.MeshBasicMaterial;
+      gemMat: THREE.MeshStandardMaterial;
+      stemMat: THREE.MeshBasicMaterial;
       hit: THREE.Mesh;
-      anchor: THREE.Vector3;
       worldPos: THREE.Vector3;
       phase: number;
     };
     const nodeObjs: NodeObj[] = [];
     const hits: THREE.Mesh[] = [];
 
-    const baseGeo = track(new THREE.CylinderGeometry(1.02, 1.06, 0.1, 64));
-    const ringGeo = track(new THREE.TorusGeometry(1.03, 0.015, 6, 120));
-    const beamGeo = track(new THREE.CylinderGeometry(0.82, 0.82, 3.2, 32, 1, true));
-    const gemGeo = track(new THREE.IcosahedronGeometry(0.34, 1));
-    const hitGeo = track(new THREE.SphereGeometry(1.25, 8, 8));
+    const baseGeo = track(new THREE.CylinderGeometry(0.9, 0.94, 0.1, 64));
+    const ringGeo = track(new THREE.TorusGeometry(0.91, 0.014, 6, 120));
+    const beamGeo = track(new THREE.CylinderGeometry(0.56, 0.56, 3.2, 24, 1, true));
+    const stemGeo = track(new THREE.CylinderGeometry(0.013, 0.013, 1.0, 6));
+    const gemGeo = track(new THREE.IcosahedronGeometry(0.31, 1));
+    const hitGeo = track(new THREE.SphereGeometry(1.05, 8, 8));
 
     nodes.forEach((node, i) => {
       const accent = new THREE.Color(node.accent);
@@ -251,6 +273,7 @@ export default function VelaScene({
       const x = Math.cos(node.angle) * NODE_R;
       const z = Math.sin(node.angle) * NODE_R;
       group.position.set(x, NODE_Y, z);
+      group.scale.setScalar(0.2);
       root.add(group);
 
       const baseMat = track(
@@ -290,7 +313,7 @@ export default function VelaScene({
         }),
       );
       const beam = new THREE.Mesh(beamGeo, beamMat);
-      beam.position.y = 1.65;
+      beam.position.y = 1.95;
       group.add(beam);
 
       const gemMat = track(
@@ -304,8 +327,21 @@ export default function VelaScene({
         }),
       );
       const gem = new THREE.Mesh(gemGeo, gemMat);
-      gem.position.y = 1.62;
+      gem.position.y = 2.0;
       group.add(gem);
+
+      const stemMat = track(
+        new THREE.MeshBasicMaterial({
+          color: accent,
+          transparent: true,
+          opacity: 0.32,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+        }),
+      );
+      const stem = new THREE.Mesh(stemGeo, stemMat);
+      stem.position.y = 1.48;
+      group.add(stem);
 
       const hitMat = track(
         new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }),
@@ -324,19 +360,16 @@ export default function VelaScene({
         baseMat,
         ringMat,
         beamMat,
+        gemMat,
+        stemMat,
         hit,
-        anchor: new THREE.Vector3(
-        x + Math.cos(node.angle) * 1.1,
-        NODE_Y + 1.5,
-        z + Math.sin(node.angle) * 1.1,
-      ),
         worldPos: new THREE.Vector3(x, NODE_Y, z),
         phase: i * 1.7,
       });
     });
 
     /* Dust */
-    const dustCount = reduced ? 0 : small ? 420 : 1100;
+    const dustCount = reduced ? 0 : small ? 320 : 760;
     let dust: THREE.Points | null = null;
     if (dustCount > 0) {
       const positions = new Float32Array(dustCount * 3);
@@ -364,27 +397,24 @@ export default function VelaScene({
       root.add(dust);
     }
 
-    /* Labels */
-    const labelEls: Record<string, HTMLElement> = {};
-    labelsRef.current?.querySelectorAll<HTMLElement>("[data-node]").forEach((el) => {
-      const key = el.dataset.node;
-      if (key) labelEls[key] = el;
-    });
-    labelsRef.current?.classList.add("is-live");
-    const projected = new THREE.Vector3();
 
     /* Camera state */
     const state = {
-      az: 0,
-      el: 0.3,
-      radius: 11.4,
-      targetRadius: 11.4,
+      az: -0.34,
+      el: 0.25,
+      radius: small ? 14.4 : 15.6,
+      targetRadius: small ? 14.4 : 15.6,
       px: 0,
       py: 0,
+      pxSmooth: 0,
+      pySmooth: 0,
       dragging: false,
       moved: 0,
       lastX: 0,
       lastY: 0,
+      lastMove: 0,
+      vel: 0,
+      lastInput: 0,
     };
     const camPos = new THREE.Vector3(0, 5.4, 15);
     const camLook = new THREE.Vector3(0, 1.9, 0);
@@ -409,68 +439,103 @@ export default function VelaScene({
     };
     resize();
 
-    const onPointerMove = (event: PointerEvent) => {
+    const raycastAt = (clientX: number, clientY: number) => {
       const rect = host.getBoundingClientRect();
-      const px = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      const py = ((event.clientY - rect.top) / rect.height) * 2 - 1;
-      state.px = Math.max(-1, Math.min(1, px));
-      state.py = Math.max(-1, Math.min(1, py));
-      pointer.set(px, -py);
+      pointer.set(
+        ((clientX - rect.left) / rect.width) * 2 - 1,
+        -(((clientY - rect.top) / rect.height) * 2 - 1),
+      );
       raycaster.setFromCamera(pointer, camera);
-      const hit = raycaster.intersectObjects(hits, false)[0];
-      const slug = (hit?.object.userData.slug as string | undefined) ?? null;
-      if (slug !== hovered) {
-        hovered = slug;
-        host.style.cursor = slug ? "pointer" : state.dragging ? "grabbing" : "grab";
+      return (raycaster.intersectObjects(hits, false)[0]?.object.userData.slug as
+        | string
+        | undefined) ?? null;
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      state.lastInput = performance.now();
+      const rect = host.getBoundingClientRect();
+      const px = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width) * 2 - 1));
+      const py = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height) * 2 - 1));
+      state.px = px;
+      state.py = py;
+      if (!state.dragging) {
+        const now = performance.now();
+        // Hover picking is the most expensive per-pixel work: cap it at ~12 Hz.
+        if (now - state.lastMove > 80) {
+          state.lastMove = now;
+          const slug = raycastAt(event.clientX, event.clientY);
+          if (slug !== hovered) {
+            hovered = slug;
+            host.style.cursor = slug ? "pointer" : "grab";
+            needsRender = true;
+            hoverCbRef.current?.(slug);
+          }
+        }
+        return;
       }
-      if (!state.dragging) return;
       const dx = event.clientX - state.lastX;
       const dy = event.clientY - state.lastY;
+      const dtMove = Math.max(16, event.timeStamp - state.lastMove) / 1000;
+      state.lastMove = event.timeStamp;
       state.lastX = event.clientX;
       state.lastY = event.clientY;
       state.moved += Math.abs(dx) + Math.abs(dy);
       state.az -= dx * 0.0055;
-      state.el = Math.max(0.06, Math.min(0.62, state.el + dy * 0.0025));
+      state.el = Math.max(0.06, Math.min(0.72, state.el + dy * 0.0025));
+      state.vel = Math.max(-5, Math.min(5, (-dx * 0.0055) / dtMove));
       host.style.cursor = "grabbing";
     };
 
     const onPointerDown = (event: PointerEvent) => {
       state.dragging = true;
       state.moved = 0;
+      state.vel = 0;
       state.lastX = event.clientX;
       state.lastY = event.clientY;
+      state.lastMove = event.timeStamp;
+      state.lastInput = performance.now();
       host.setPointerCapture?.(event.pointerId);
       host.style.cursor = "grabbing";
+      skipIntro();
     };
 
     const onPointerUp = (event: PointerEvent) => {
       const wasDragging = state.dragging;
       state.dragging = false;
       host.releasePointerCapture?.(event.pointerId);
-      if (wasDragging && state.moved < 6) {
-        const rect = host.getBoundingClientRect();
-        pointer.set(
-          ((event.clientX - rect.left) / rect.width) * 2 - 1,
-          -(((event.clientY - rect.top) / rect.height) * 2 - 1),
-        );
-        raycaster.setFromCamera(pointer, camera);
-        const hit = raycaster.intersectObjects(hits, false)[0];
-        const slug = hit?.object.userData.slug as string | undefined;
-        if (slug) selectRef.current(slug);
+      if (wasDragging && state.moved < 8) {
+        const slug = raycastAt(event.clientX, event.clientY);
+        if (slug) {
+          state.vel = 0;
+          selectRef.current(slug);
+        }
       }
       host.style.cursor = hovered ? "pointer" : "grab";
+      state.lastInput = performance.now();
     };
 
-    const onPointerLeave = () => {
-      state.px = 0;
-      state.py = 0;
+    const onPointerCancel = () => {
+      state.dragging = false;
       host.style.cursor = "grab";
     };
 
+    const onPointerLeave = () => {
+      if (state.dragging) return;
+      state.px = 0;
+      state.py = 0;
+      host.style.cursor = "grab";
+      if (hovered) {
+        hovered = null;
+        needsRender = true;
+        hoverCbRef.current?.(null);
+      }
+    };
+
     host.style.cursor = "grab";
-    host.addEventListener("pointermove", onPointerMove);
+    host.addEventListener("pointermove", onPointerMove, { passive: true });
     host.addEventListener("pointerdown", onPointerDown);
     host.addEventListener("pointerup", onPointerUp);
+    host.addEventListener("pointercancel", onPointerCancel);
     host.addEventListener("pointerleave", onPointerLeave);
 
     const resizeObserver = new ResizeObserver(resize);
@@ -486,10 +551,49 @@ export default function VelaScene({
     );
     io.observe(host);
 
+    /* Entrance: starts outside the atrium and glides in, islands rising one by one. */
+    let seen = false;
+    try {
+      seen = window.sessionStorage.getItem(INTRO_KEY) === "1";
+    } catch {
+      seen = false;
+    }
+    const introLength = reduced || seen ? 0 : small ? Math.round(INTRO_MS * 0.66) : INTRO_MS;
+    let introElapsed = 0;
+    let introDone = introLength === 0;
+    const finishIntro = () => {
+      if (introDone) return;
+      introDone = true;
+      try {
+        window.sessionStorage.setItem(INTRO_KEY, "1");
+      } catch {
+        /* private mode: the entrance simply replays */
+      }
+      enteredRef.current?.();
+    };
+    const skipIntro = () => {
+      if (introDone) return;
+      introElapsed = introLength;
+      finishIntro();
+      needsRender = true;
+    };
+    if (skipRef) skipRef.current = skipIntro;
+    if (introDone) enteredRef.current?.();
+
+    const onKeySkip = (event: KeyboardEvent) => {
+      if (event.key === "Escape" || event.key === "Enter" || event.key === " ") skipIntro();
+    };
+    const onWheelSkip = () => skipIntro();
+    window.addEventListener("keydown", onKeySkip);
+    window.addEventListener("wheel", onWheelSkip, { passive: true });
+
     let raf = 0;
     let elapsed = 0;
     let ready = false;
     const clock = new THREE.Clock();
+    let perfAcc = 0;
+    let perfFrames = 0;
+    let perfAdjustments = 0;
 
     const update = (dt: number) => {
       elapsed += dt;
@@ -497,9 +601,19 @@ export default function VelaScene({
       const active = activeRef.current;
       const activeNode = active ? nodeObjs.find((n) => n.slug === active) : undefined;
 
+      /* Entrance progress */
+      const raw = introLength > 0 ? Math.min(1, introElapsed / introLength) : 1;
+      const intro = easeOutQuart(raw);
+
+      /* Drag inertia */
+      if (!state.dragging && Math.abs(state.vel) > 0.0005) {
+        state.az += state.vel * dt;
+        state.vel *= Math.exp(-3.6 * dt);
+      }
+
       /* Core */
       if (!reduced) {
-        coreMesh.rotation.y += dt * 0.16;
+        coreMesh.rotation.y += dt * (0.16 + (1 - intro) * 0.6);
         coreMesh.rotation.x = Math.sin(t * 0.35) * 0.14;
         wire.rotation.copy(coreMesh.rotation);
         glow.scale.setScalar(1 + Math.sin(t * 0.9) * 0.05);
@@ -509,89 +623,114 @@ export default function VelaScene({
         if (dust) dust.rotation.y += dt * 0.012;
         coreLight.intensity = 38 + Math.sin(t * 1.2) * 6;
       }
+      core.scale.setScalar(0.55 + 0.45 * intro);
+      glowMat.opacity = 0.09 * intro;
+      rings.forEach((ring) => {
+        ring.mat.opacity = ring.baseOpacity * intro;
+      });
+      floorMat.opacity = 0.55 * intro;
+      discMat.opacity = intro;
+      if (dust) dust.visible = intro > 0.05;
 
       /* Nodes */
-      nodeObjs.forEach((node) => {
+      nodeObjs.forEach((node, index) => {
         const isActive = node.slug === active;
-        const isHover = node.slug === hovered;
+        const isHover = node.slug === hovered || node.slug === hoverRef?.current;
         const lift = isActive ? 0.22 : isHover ? 0.08 : 0;
-        node.group.position.y = THREE.MathUtils.lerp(
-          node.group.position.y,
-          NODE_Y + lift,
-          reduced ? 1 : 1 - Math.exp(-6 * dt),
-        );
+        const stagger = Math.min(1, Math.max(0, (intro - index * 0.06) / 0.62));
+        const rise = easeOutQuart(stagger);
+
+        node.group.scale.setScalar(0.24 + 0.76 * rise);
+        const targetY = NODE_Y + lift;
+        if (reduced) {
+          node.group.position.y = targetY;
+        } else {
+          node.group.position.y = THREE.MathUtils.lerp(
+            -1.5,
+            targetY,
+            rise,
+          );
+        }
         if (!reduced) {
-          node.gem.position.y = 1.62 + Math.sin(t * 0.9 + node.phase) * 0.08;
-          node.gem.rotation.y += dt * (isActive ? 0.9 : 0.32);
+          node.gem.position.y = 2.0 + Math.sin(t * 0.9 + node.phase) * 0.08;
+          node.gem.rotation.y += dt * (isActive ? 1.1 : isHover ? 0.6 : 0.32);
           node.gem.rotation.x += dt * 0.12;
-          node.ringMat.opacity = 0.45 + Math.sin(t * 1.4 + node.phase) * 0.16 + (isActive ? 0.25 : 0);
+          node.ringMat.opacity =
+            (0.45 + Math.sin(t * 1.4 + node.phase) * 0.16 + (isActive ? 0.25 : 0)) * rise;
+        } else {
+          node.ringMat.opacity = 0.6 * rise;
         }
         const dim = active ? (isActive ? 1 : 0.28) : 1;
         node.baseMat.emissiveIntensity = damp(
           node.baseMat.emissiveIntensity,
-          (isActive ? 1.55 : 0.85) * (active && !isActive ? 0.5 : 1),
+          (isActive ? 1.55 : isHover ? 1.15 : 0.85) * (active && !isActive ? 0.5 : 1),
+          4,
+          dt,
+        );
+        node.gemMat.emissiveIntensity = damp(
+          node.gemMat.emissiveIntensity,
+          isActive ? 2.1 : isHover ? 1.85 : 1.5,
           4,
           dt,
         );
         node.beamMat.opacity = damp(
           node.beamMat.opacity,
-          (isActive ? 0.16 : isHover ? 0.1 : 0.055) * dim,
-          4,
+          (isActive ? 0.16 : isHover ? 0.1 : 0.055) * dim * rise,
+          5,
           dt,
         );
+        node.stemMat.opacity = (isActive ? 0.85 : isHover ? 0.7 : 0.32) * rise;
       });
 
       /* Camera */
+      state.pxSmooth = damp(state.pxSmooth, state.px, 2.6, dt);
+      state.pySmooth = damp(state.pySmooth, state.py, 2.6, dt);
+
       if (activeNode) {
         outward.set(activeNode.group.position.x, 0, activeNode.group.position.z).normalize();
-        desiredPos
-          .copy(activeNode.worldPos)
-          .add(outward.multiplyScalar(5.15))
-          .add(new THREE.Vector3(0, 2.05, 0));
-        desiredLook.copy(activeNode.worldPos).add(new THREE.Vector3(0, 1.3, 0));
+        desiredPos.copy(activeNode.worldPos).add(outward.multiplyScalar(5.15));
+        desiredPos.y += 2.05;
+        desiredLook.copy(activeNode.worldPos);
+        desiredLook.y += 1.3;
       } else {
-        state.radius = damp(state.radius, state.targetRadius, 1.2, dt);
-        const az = state.az + state.px * 0.1;
-        const el = state.el + state.py * 0.03;
+        state.radius = damp(state.radius, state.targetRadius, 1.4, dt);
+        const az = state.az + state.pxSmooth * 0.1;
+        const el = state.el + state.pySmooth * 0.03;
         desiredPos.set(
           Math.sin(az) * state.radius * Math.cos(el),
           1.1 + Math.sin(el) * state.radius,
           Math.cos(az) * state.radius * Math.cos(el),
         );
-        desiredLook.set(0, 1.92, 0);
+        desiredLook.set(0, 1.95, 0);
       }
-      camPos.x = damp(camPos.x, desiredPos.x, activeNode ? 2.6 : 1.1, dt);
-      camPos.y = damp(camPos.y, desiredPos.y, activeNode ? 2.6 : 1.1, dt);
-      camPos.z = damp(camPos.z, desiredPos.z, activeNode ? 2.6 : 1.1, dt);
-      camLook.x = damp(camLook.x, desiredLook.x, activeNode ? 2.6 : 1.6, dt);
-      camLook.y = damp(camLook.y, desiredLook.y, activeNode ? 2.6 : 1.6, dt);
-      camLook.z = damp(camLook.z, desiredLook.z, activeNode ? 2.6 : 1.6, dt);
+
+      /* Entrance: pull back and lift while the islands assemble. */
+      if (!introDone) {
+        const back = 1 - intro;
+        desiredPos.x += Math.sin(-0.42) * back * 9.2;
+        desiredPos.z += Math.cos(-0.42) * back * 9.2;
+        desiredPos.y += back * 2.8;
+        desiredLook.y -= back * 0.62;
+      }
+
+      camPos.x = damp(camPos.x, desiredPos.x, activeNode ? 2.6 : 1.35, dt);
+      camPos.y = damp(camPos.y, desiredPos.y, activeNode ? 2.6 : 1.35, dt);
+      camPos.z = damp(camPos.z, desiredPos.z, activeNode ? 2.6 : 1.35, dt);
+      camLook.x = damp(camLook.x, desiredLook.x, activeNode ? 2.6 : 1.8, dt);
+      camLook.y = damp(camLook.y, desiredLook.y, activeNode ? 2.6 : 1.8, dt);
+      camLook.z = damp(camLook.z, desiredLook.z, activeNode ? 2.6 : 1.8, dt);
       camera.position.copy(camPos);
       camera.lookAt(camLook);
 
-      /* Labels */
-      const w = host.clientWidth;
-      const h = host.clientHeight;
-      nodeObjs.forEach((node) => {
-        const el = labelEls[node.slug];
-        if (!el) return;
-        projected.copy(node.anchor).project(camera);
-        const rawX = (projected.x * 0.5 + 0.5) * w;
-        const y = (-projected.y * 0.5 + 0.5) * h;
-        const x = Math.min(w - 120, Math.max(120, rawX));
-        const inFront = projected.z < 1;
-        const isActive = node.slug === active;
-        const isHover = node.slug === hovered;
-        el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translate(-50%, -50%)`;
-        el.style.opacity = inFront && (isHover || isActive) ? "1" : "0";
-      });
     };
 
     let lastActive: string | null | undefined;
     const render = () => {
       raf = requestAnimationFrame(render);
-      const dt = Math.min(clock.getDelta(), 0.05);
+      const frame = clock.getDelta();
+      const dt = Math.min(frame, 0.05);
       if (!inView || document.hidden) return;
+      if (!introDone) introElapsed += frame * 1000;
       if (reduced) {
         const current = activeRef.current;
         if (current !== lastActive) {
@@ -603,10 +742,31 @@ export default function VelaScene({
       }
       update(dt);
       renderer.render(scene, camera);
+      if (!introDone && introElapsed >= introLength) finishIntro();
       if (!ready) {
         ready = true;
         host.classList.add("is-ready");
         readyRef.current?.();
+      }
+
+      /* Adaptive resolution: keep motion smooth on weaker GPUs without touching layout. */
+      if (!reduced && ready) {
+        perfAcc += frame;
+        perfFrames += 1;
+        if (perfFrames >= 90) {
+          const avg = perfAcc / perfFrames;
+          if (avg > 0.021 && dpr > 0.9 && perfAdjustments < 3) {
+            dpr = Math.max(0.85, dpr - 0.25);
+            renderer.setPixelRatio(dpr);
+            perfAdjustments += 1;
+          } else if (avg < 0.0132 && dpr < dprCap && perfAdjustments < 3) {
+            dpr = Math.min(dprCap, dpr + 0.15);
+            renderer.setPixelRatio(dpr);
+            perfAdjustments += 1;
+          }
+          perfAcc = 0;
+          perfFrames = 0;
+        }
       }
     };
     render();
@@ -616,11 +776,14 @@ export default function VelaScene({
       resizeObserver.disconnect();
       io.disconnect();
       window.removeEventListener("resize", resize);
+      window.removeEventListener("keydown", onKeySkip);
+      window.removeEventListener("wheel", onWheelSkip);
       host.removeEventListener("pointermove", onPointerMove);
       host.removeEventListener("pointerdown", onPointerDown);
       host.removeEventListener("pointerup", onPointerUp);
+      host.removeEventListener("pointercancel", onPointerCancel);
       host.removeEventListener("pointerleave", onPointerLeave);
-      labelsRef.current?.classList.remove("is-live");
+      if (skipRef) skipRef.current = null;
       disposables.forEach((item) => item.dispose());
       renderer.dispose();
       if (renderer.domElement.parentNode === host) {
@@ -628,7 +791,7 @@ export default function VelaScene({
       }
       host.classList.remove("is-ready");
     };
-  }, [nodes, reduced, activeRef, labelsRef]);
+  }, [nodes, reduced, activeRef, hoverRef, skipRef]);
 
   return <div ref={hostRef} className="vela-canvas-host" aria-hidden="true" />;
 }

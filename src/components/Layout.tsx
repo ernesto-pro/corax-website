@@ -4,6 +4,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { MobileCTA } from "./MobileCTA";
 import { CommandPalette } from "./CommandPalette";
+import { prefetchVelaScene } from "./experience/prefetch";
 import { Seo } from "./Seo";
 import { chrome } from "../i18n/chrome";
 import { htmlLang } from "../i18n/lang";
@@ -194,6 +195,24 @@ export function Layout() {
   const c = chrome[lang];
 
   useReveal(pathname);
+
+  // Warm the 3D chunk only when someone shows intent to enter the studio.
+  useEffect(() => {
+    const intent = (event: Event) => {
+      const target = (event.target as HTMLElement | null)?.closest?.("a[href]");
+      if (!target) return;
+      const href = target.getAttribute("href") ?? "";
+      if (/^\/(en\/)?(esperienza|experience)(\/|$|\?|#)/.test(href)) prefetchVelaScene();
+    };
+    document.addEventListener("pointerover", intent, { passive: true });
+    document.addEventListener("focusin", intent);
+    document.addEventListener("pointerdown", intent, { passive: true });
+    return () => {
+      document.removeEventListener("pointerover", intent);
+      document.removeEventListener("focusin", intent);
+      document.removeEventListener("pointerdown", intent);
+    };
+  }, []);
 
   useEffect(() => {
     document.documentElement.lang = htmlLang[lang];
