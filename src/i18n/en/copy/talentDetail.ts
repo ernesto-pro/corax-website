@@ -15,6 +15,15 @@ export const talentDetailCopy: Record<string, string> = {
   Roster: "Roster",
   "Altri talenti.": "More talent.",
   "Tutto il roster": "The whole roster",
+  "Profili ufficiali": "Official profiles",
+  "Canali ufficiali": "Official channels",
+  "I canali, senza intermediari.": "The channels, no middlemen.",
+  "Il profilo Instagram e, quando c'è, il canale YouTube: i posti dove il talento parla direttamente al suo pubblico.":
+    "The Instagram profile and, where there is one, the YouTube channel: the places where talent speaks directly to its audience.",
+  "Apri il profilo": "Open the profile",
+  "Apri il canale": "Open the channel",
+  "Video dal canale": "Videos from the channel",
+  "Tutti i video": "All videos",
   "Costruiamo una collaborazione che abbia senso.":
     "Let's build a collaboration that makes sense.",
   "Raccontaci il progetto e ti diremo qual è il talento giusto — o se non c'è.":

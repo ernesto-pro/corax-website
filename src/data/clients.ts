@@ -319,6 +319,45 @@ export const clientsProfiles: Client[] = [
   },
 ];
 
+export type BrandLogo = {
+  src: string;
+  /** White marks need to become black on paper backgrounds. */
+  invert?: boolean;
+  /** Logos with a baked-in white background need multiply blending. */
+  multiply?: boolean;
+};
+
+/**
+ * Real brand marks stored in `public/img/clients`.
+ * Keyed by the exact name used in the portfolio client list.
+ */
+export const brandLogos: Record<string, BrandLogo> = {
+  "Politecnico di Milano": { src: "/img/clients/politecnico.svg" },
+  Bennet: { src: "/img/clients/bennet.svg" },
+  "Gruppo Helvetia Italia": { src: "/img/clients/helvetia.svg" },
+  "Campus Bio-Medico": { src: "/img/clients/campus-bio-medico.svg" },
+  "Old Wild West": { src: "/img/clients/old-wild-west.svg" },
+  "Aroma Zone": { src: "/img/clients/aroma-zone.png" },
+  Erion: { src: "/img/clients/erion.svg", invert: true },
+  KFC: { src: "/img/clients/kfc.svg" },
+  Rossopomodoro: { src: "/img/clients/rossopomodoro.png" },
+  "Risparmio Casa": { src: "/img/clients/risparmio-casa.png", multiply: true },
+  "Citroën": { src: "/img/clients/citroen.svg" },
+  "Babaco Market": { src: "/img/clients/babaco-market.svg" },
+  Treedom: { src: "/img/clients/treedom.png" },
+  PlayStation: { src: "/img/clients/playstation.svg" },
+  Nivea: { src: "/img/clients/nivea.svg" },
+  "Tiffany & Co.": { src: "/img/clients/tiffany.png" },
+  Brioschi: { src: "/img/clients/brioschi.jpg", multiply: true },
+  "Samsung TV Plus": { src: "/img/clients/samsung.svg" },
+  Spotify: { src: "/img/clients/spotify.svg" },
+  "The Channel Store": { src: "/img/clients/the-channel-store.svg" },
+  Impresoft: { src: "/img/clients/impresoft.svg" },
+  "Numero Diez": { src: "/img/clients/numero-diez.png" },
+};
+
+export const getBrandLogo = (name: string) => brandLogos[name];
+
 export const getClient = (slug: string) => clientsProfiles.find((c) => c.slug === slug);
 
 export const getClientForProject = (projectSlug: string) =>

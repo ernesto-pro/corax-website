@@ -1,4 +1,5 @@
 import { site } from "../data/site";
+import { instagramUrl } from "../data/talents";
 import { contentFor } from "../i18n/content";
 import { categoryLabel } from "../i18n/content";
 import { langFromPath, itPathOf, localizePath, alternates } from "../i18n/routes";
@@ -408,6 +409,10 @@ export function getHead(rawPath: string): HeadData {
           name: talent.name,
           description: talent.note,
           url: `${BASE}${path}`,
+          sameAs: [
+            instagramUrl(talent.instagram),
+            ...(talent.youtube ? [talent.youtube.url] : []),
+          ],
           worksFor: { "@id": `${BASE}/#organization` },
           knowsAbout: talent.categories,
         },

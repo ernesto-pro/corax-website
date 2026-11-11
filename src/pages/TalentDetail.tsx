@@ -1,7 +1,8 @@
 import { Link, useParams } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Instagram, Play, Youtube } from "lucide-react";
 import { Breadcrumbs, CTABand } from "../components/PageHero";
 import { ArrowLink } from "../components/UI";
+import { instagramUrl, youtubeVideoUrl } from "../data/talents";
 import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
@@ -73,6 +74,30 @@ export function TalentDetail() {
             </ArrowLink>
           )}
         </div>
+        <div className="talent-detail__social" aria-label={t("Profili ufficiali")}>
+          <a
+            className="social-pill"
+            href={instagramUrl(talent.instagram)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Instagram size={15} strokeWidth={1.6} aria-hidden />
+            <span>@{talent.instagram}</span>
+            <ArrowUpRight size={13} strokeWidth={1.6} aria-hidden />
+          </a>
+          {talent.youtube && (
+            <a
+              className="social-pill"
+              href={talent.youtube.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Youtube size={15} strokeWidth={1.6} aria-hidden />
+              <span>{talent.youtube.name}</span>
+              <ArrowUpRight size={13} strokeWidth={1.6} aria-hidden />
+            </a>
+          )}
+        </div>
       </header>
 
       <section className="talent-detail__body">
@@ -94,6 +119,107 @@ export function TalentDetail() {
             <li>{t("Produzione e coordinamento end-to-end")}</li>
           </ul>
         </div>
+      </section>
+
+      <section className="talent-channels">
+        <div className="talent-channels__head">
+          <span className="eyebrow">{t("Canali ufficiali")}</span>
+          <h2>{t("I canali, senza intermediari.")}</h2>
+          <p>
+            {t(
+              "Il profilo Instagram e, quando c'è, il canale YouTube: i posti dove il talento parla direttamente al suo pubblico.",
+            )}
+          </p>
+        </div>
+
+        <div
+          className={`talent-channels__grid ${
+            talent.youtube ? "talent-channels__grid--pair" : ""
+          }`}
+        >
+          <a
+            className="channel-card channel-card--instagram"
+            href={instagramUrl(talent.instagram)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className="channel-card__icon" aria-hidden>
+              <Instagram size={20} strokeWidth={1.5} />
+            </span>
+            <span className="channel-card__label">Instagram</span>
+            <strong className="channel-card__name">@{talent.instagram}</strong>
+            <span className="channel-card__cta">
+              {t("Apri il profilo")}
+              <ArrowUpRight size={14} strokeWidth={1.6} aria-hidden />
+            </span>
+          </a>
+
+          {talent.youtube && (
+            <a
+              className="channel-card channel-card--youtube"
+              href={talent.youtube.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="channel-card__icon" aria-hidden>
+                <Youtube size={20} strokeWidth={1.5} />
+              </span>
+              <span className="channel-card__label">YouTube</span>
+              <strong className="channel-card__name">{talent.youtube.name}</strong>
+              <span className="channel-card__cta">
+                {t("Apri il canale")}
+                <ArrowUpRight size={14} strokeWidth={1.6} aria-hidden />
+              </span>
+            </a>
+          )}
+        </div>
+
+        {talent.youtube && (
+          <div className="talent-videos">
+            <div className="talent-videos__head">
+              <span className="eyebrow">{t("Video dal canale")}</span>
+              <a
+                className="talent-videos__all"
+                href={talent.youtube.url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t("Tutti i video")}
+                <ArrowUpRight size={14} strokeWidth={1.6} aria-hidden />
+              </a>
+            </div>
+            <div className="talent-videos__grid">
+              {talent.youtube.videos.map((video) => (
+                <a
+                  key={video.id}
+                  className="talent-video"
+                  href={youtubeVideoUrl(video.id)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="talent-video__media">
+                    <img
+                      src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      width={480}
+                      height={360}
+                    />
+                    <span className="talent-video__play" aria-hidden>
+                      <Play size={17} fill="currentColor" strokeWidth={0} />
+                    </span>
+                  </span>
+                  <span className="talent-video__title">{video.title}</span>
+                  <span className="talent-video__meta">
+                    YouTube
+                    <ArrowUpRight size={13} strokeWidth={1.6} aria-hidden />
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       <section className="talent-detail__related">

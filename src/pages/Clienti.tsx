@@ -1,6 +1,7 @@
 import { PageHero, CTABand } from "../components/PageHero";
 import { SectionHead } from "../components/UI";
 import { ClientCard } from "../components/Cards";
+import { BrandLogo } from "../components/BrandLogo";
 import { clients } from "../data/projects";
 import { Marquee } from "../components/UI";
 import { useContent, useT } from "../i18n/translate";
@@ -122,14 +123,9 @@ export function Clienti() {
           </p>
         </SectionHead>
         <div className="logo-wall" aria-label={t("Brand e partner Corax")}>
-          {clients.map((client, i) => (
-            <span
-              key={client}
-              className={`logo-wall__item ${i % 7 === 0 ? "is-serif" : ""} ${
-                i % 5 === 0 ? "is-strong" : ""
-              }`}
-            >
-              {client}
+          {clients.map((client) => (
+            <span key={client} className="logo-wall__item logo-wall__item--logo">
+              <BrandLogo name={client} plain />
             </span>
           ))}
         </div>

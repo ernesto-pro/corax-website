@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { Breadcrumbs, CTABand } from "../components/PageHero";
 import { ProjectCard } from "../components/Cards";
+import { BrandLogo } from "../components/BrandLogo";
 import { ArrowLink, SectionHead } from "../components/UI";
 import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
@@ -65,9 +66,13 @@ export function ClientDetail() {
           ) : (
             <span className="client-hero__pattern" aria-hidden />
           )}
-          <span className="client-hero__mono" aria-hidden>
-            {client.monogram}
-          </span>
+          <BrandLogo
+            name={client.name}
+            monogram={client.monogram}
+            className="client-hero__brand"
+            eager
+            decorative
+          />
           <span className="client-hero__sector">{client.sector}</span>
         </div>
       </header>
@@ -139,8 +144,8 @@ export function ClientDetail() {
           {others.map((c, i) => (
             <Link key={c.slug} to={to(`/clienti/${c.slug}`)} className="client-mini">
               <span className="client-mini__index">{String(i + 1).padStart(2, "0")}</span>
-              <span className="client-mini__mono" aria-hidden>
-                {c.monogram}
+              <span className="client-mini__logo">
+                <BrandLogo name={c.name} monogram={c.monogram} decorative />
               </span>
               <span className="client-mini__name">
                 <h3>{c.name}</h3>

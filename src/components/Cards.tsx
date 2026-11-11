@@ -4,6 +4,7 @@ import type { Project } from "../data/projects";
 import type { Property } from "../data/properties";
 import type { NewsItem } from "../data/news";
 import type { Client } from "../data/clients";
+import { BrandLogo } from "./BrandLogo";
 import { categoryLabel } from "../i18n/content";
 import { useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
@@ -139,6 +140,12 @@ export function ClientCard({ client, index }: { client: Client; index: number })
         <span className="client-card__index">{String(index + 1).padStart(2, "0")}</span>
         <span className="client-card__sector">{client.sector}</span>
       </div>
+      <BrandLogo
+        name={client.name}
+        monogram={client.monogram}
+        className="client-card__logo"
+        decorative
+      />
       <span className="client-card__mono" aria-hidden>
         {client.monogram}
       </span>

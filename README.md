@@ -104,6 +104,22 @@ Il build genera una pagina HTML per ogni rotta in `src/data/routes.ts`, più
   done
   ```
 
+## Talent e clienti
+
+- Ogni scheda talento espone i profili ufficiali: handle Instagram, canale
+  YouTube (solo per chi ne ha uno reale) e due video scelti dal canale. I dati
+  stanno in `src/data/talents.ts`; le card video usano le thumbnail
+  `i.ytimg.com` e aprono YouTube in una nuova scheda, senza iframe né cookie di
+  terze parti prima del consenso.
+- Il dettaglio talento aggiunge i profili social anche al JSON-LD `Person`
+  (`sameAs`), così i motori collegano la pagina ai canali ufficiali.
+- I loghi dei brand sono in `public/img/clients/` e mappati in `brandLogos`
+  (`src/data/clients.ts`). `BrandLogo` mostra il logo reale e ricade sul
+  monogramma se l'asset manca o non carica. I loghi bianchi (Erion) vengono resi
+  monocromatici, quelli con fondo bianco usano `mix-blend-mode: multiply`.
+- Per aggiungere un brand: salva il logo in `public/img/clients/`, aggiungi la
+  voce in `brandLogos` e, se serve, il profilo in `clientsProfiles`.
+
 ## Dove si aggiorna il contenuto
 
 | Cosa | File |
@@ -111,7 +127,7 @@ Il build genera una pagina HTML per ogni rotta in `src/data/routes.ts`, più
 | News e comunicati | `src/data/news.ts` + copertine in `src/data/newsCovers.ts` |
 | Stories, feed e iniziative | `src/data/instagram.ts` |
 | Progetti / property | `src/data/projects.ts`, `src/data/properties.ts` |
-| Clienti e talenti | `src/data/clients.ts`, `src/data/talents.ts` |
+| Clienti e talenti | `src/data/clients.ts`, `src/data/talents.ts` + loghi in `public/img/clients/` |
 | Navigazione, contatti, numeri | `src/data/site.ts`, `src/data/company.ts` |
 | SEO, title, JSON-LD | `src/seo/head.ts` |
 | Dati della scena 3D | `src/data/experience.ts` |

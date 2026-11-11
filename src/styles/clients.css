@@ -15,6 +15,45 @@
   color: var(--coral);
 }
 
+/* ---------- brand marks ---------- */
+
+.brand-logo {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  background: var(--paper);
+  border: 1px solid rgba(8, 7, 13, 0.14);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.brand-logo img {
+  display: block;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.brand-logo img.is-invert {
+  filter: brightness(0);
+}
+.brand-logo--plain {
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+.brand-logo--fallback .brand-logo__mono {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+}
+
 /* ---------- client index ---------- */
 
 .clients-grid {
@@ -88,10 +127,20 @@
   transition: transform 0.6s var(--ease-out), color 0.45s var(--ease);
 }
 
+.client-card__logo {
+  position: absolute;
+  top: clamp(52px, 5.4vw, 74px);
+  left: clamp(20px, 2.2vw, 30px);
+  z-index: 2;
+  width: clamp(96px, 9.4vw, 124px);
+  height: clamp(38px, 3.6vw, 48px);
+  padding: 6px 10px;
+}
+
 .client-card__body {
   position: relative;
   z-index: 2;
-  margin-top: clamp(90px, 10vw, 130px);
+  margin-top: clamp(112px, 11vw, 144px);
 }
 
 .client-card__body h3 {
@@ -341,7 +390,7 @@
     var(--ink-2);
 }
 
-.client-hero__visual img {
+.client-hero__visual > img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -365,16 +414,14 @@
   opacity: 0.22;
 }
 
-.client-hero__mono {
+.client-hero__brand {
   position: absolute;
-  right: clamp(14px, 2vw, 26px);
-  bottom: clamp(6px, 1.4vw, 16px);
-  z-index: 1;
-  font-size: clamp(6rem, 13vw, 13rem);
-  font-weight: 700;
-  line-height: 0.72;
-  letter-spacing: -0.08em;
-  color: var(--accent);
+  right: clamp(14px, 2vw, 24px);
+  bottom: clamp(14px, 2vw, 24px);
+  z-index: 2;
+  width: clamp(128px, 16vw, 196px);
+  height: clamp(56px, 5.6vw, 74px);
+  padding: 10px 16px;
 }
 
 .client-hero__sector {
@@ -491,7 +538,7 @@
 
 .client-mini {
   display: grid;
-  grid-template-columns: 38px 72px minmax(0, 1fr) 32px;
+  grid-template-columns: 38px 64px minmax(0, 1fr) 32px;
   align-items: center;
   gap: clamp(12px, 2vw, 26px);
   padding: 20px 0;
@@ -503,12 +550,14 @@
   letter-spacing: 0.1em;
   color: var(--muted);
 }
-.client-mini__mono {
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.05em;
-  color: var(--muted);
+.client-mini__logo {
+  display: flex;
+  align-items: center;
+}
+.client-mini__logo .brand-logo {
+  width: 64px;
+  height: 30px;
+  padding: 4px 6px;
 }
 .client-mini__name h3 {
   font-size: clamp(15px, 1.6vw, 20px);
@@ -646,6 +695,11 @@
   .client-mini {
     grid-template-columns: 30px 48px minmax(0, 1fr) 26px;
   }
+  .client-mini__logo .brand-logo {
+    width: 48px;
+    height: 26px;
+    padding: 3px 5px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -661,9 +715,15 @@
     min-height: 280px;
   }
   .client-card__body {
-    margin-top: 84px;
+    margin-top: 104px;
   }
   .client-others__head {
     align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .client-hero__content h1 {
+    font-size: clamp(2.2rem, 11vw, 3rem);
   }
 }
