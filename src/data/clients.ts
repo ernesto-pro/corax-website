@@ -347,7 +347,7 @@ export const brandLogos: Record<string, BrandLogo> = {
   Treedom: { src: "/img/clients/treedom.png" },
   PlayStation: { src: "/img/clients/playstation.svg" },
   Nivea: { src: "/img/clients/nivea.svg" },
-  "Tiffany & Co.": { src: "/img/clients/tiffany.png" },
+  "Tiffany & Co.": { src: "/img/clients/tiffany.png", multiply: true },
   Brioschi: { src: "/img/clients/brioschi.jpg", multiply: true },
   "Samsung TV Plus": { src: "/img/clients/samsung.svg" },
   Spotify: { src: "/img/clients/spotify.svg" },
