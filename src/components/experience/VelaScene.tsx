@@ -594,7 +594,7 @@ export default function VelaScene({
     let raf = 0;
     let elapsed = 0;
     let ready = false;
-    const clock = new THREE.Clock();
+    let lastFrame = performance.now();
     let perfAcc = 0;
     let perfFrames = 0;
     let perfAdjustments = 0;
@@ -731,7 +731,9 @@ export default function VelaScene({
     let lastActive: string | null | undefined;
     const render = () => {
       raf = requestAnimationFrame(render);
-      const frame = clock.getDelta();
+      const nowFrame = performance.now();
+      const frame = Math.max(0, (nowFrame - lastFrame) / 1000);
+      lastFrame = nowFrame;
       const dt = Math.min(frame, 0.05);
       if (!inView || document.hidden) return;
       if (!introDone) introElapsed += frame * 1000;
