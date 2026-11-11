@@ -10,6 +10,7 @@ import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
 import { NotFound } from "./NotFound";
+import { optSrc } from "../lib/img";
 
 export function NewsDetail() {
   const { slug } = useParams();
@@ -67,7 +68,7 @@ export function NewsDetail() {
 
       <figure className="news-article__cover">
         <img
-          src={newsCover(article.slug)}
+          src={optSrc(newsCover(article.slug))}
           alt={newsCoverAltFor(article.slug, lang, article.title)}
           width={1600}
           height={900}

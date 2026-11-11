@@ -14,28 +14,36 @@ import { CTABand, SplitStatement } from "../components/PageHero";
 import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
+import { optSrc } from "../lib/img";
 
 function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
+  const [src, setSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const compact = window.matchMedia("(max-width: 720px)").matches;
+    // Phones keep the lightweight poster: no video download at all.
+    if (reduced || compact) return;
+    const medium = window.matchMedia("(max-width: 1120px)").matches;
+    setSrc(medium ? site.video.src720 : site.video.src);
+  }, []);
 
   useEffect(() => {
     const video = ref.current;
-    if (!video) return;
+    if (!video || !src) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const compact = window.matchMedia("(max-width: 720px)").matches;
-    if (reduced || compact) {
-      video.pause();
-      return;
-    }
+    if (reduced) return;
     video.play().catch(() => undefined);
-  }, []);
+  }, [src]);
 
   return (
     <>
       <video
         ref={ref}
         className="hero__video"
+        src={src ?? undefined}
         muted
         loop
         playsInline
@@ -43,11 +51,7 @@ function HeroVideo() {
         aria-hidden="true"
         tabIndex={-1}
         onPlaying={() => setPlaying(true)}
-      >
-        <source src={site.video.src540} type="video/mp4" media="(max-width: 720px)" />
-        <source src={site.video.src720} type="video/mp4" media="(max-width: 1120px)" />
-        <source src={site.video.src} type="video/mp4" />
-      </video>
+      ></video>
       <img
         className={`hero__poster ${playing ? "is-hidden" : ""}`}
         src="/img/poster-800.webp"
@@ -261,6 +265,9 @@ export function Home() {
               className="unit-card reveal"
               style={{ ["--accent" as string]: unit.accent }}
             >
+              <span className="unit-card__glyph" aria-hidden>
+                {unit.index}
+              </span>
               <div className="unit-card__top">
                 <span className="unit-card__index">{unit.index}</span>
                 <span className="unit-card__arrow">
@@ -373,7 +380,7 @@ export function Home() {
       <section className="spotlight">
         <div className="spotlight__media">
           <img
-            src="/img/covers/citroen-01.jpg"
+            src="/img/covers/citroen-01.webp"
             alt={t("Frank Gramuglia a bordo di una Citroën Ami in città")}
             loading="lazy"
             width={1600}
@@ -439,7 +446,7 @@ export function Home() {
             >
               <span className="talent-mini__media">
                 <img
-                  src={`/img/talents/${talent.slug}.jpg`}
+                  src={optSrc(`/img/talents/${talent.slug}.jpg`)}
                   alt=""
                   loading="lazy"
                   decoding="async"
@@ -536,7 +543,7 @@ export function Home() {
           <Link to={to("/insight/leader-della-crescita-2026")} className="press-feature">
             <span className="press-feature__media">
               <img
-                src="/img/covers/leader.jpg"
+                src="/img/covers/leader.webp"
                 alt={t("Quattro persone del team Corax in posa su fondo scuro")}
                 loading="lazy"
                 decoding="async"

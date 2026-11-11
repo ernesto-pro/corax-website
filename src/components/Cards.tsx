@@ -10,6 +10,7 @@ import { categoryLabel } from "../i18n/content";
 import { useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
+import { optSrc } from "../lib/img";
 
 export function ProjectCard({
   project,
@@ -33,7 +34,7 @@ export function ProjectCard({
       <div className="project-card__media">
         {project.cover ? (
           <img
-            src={project.cover}
+            src={optSrc(project.cover)}
             alt={project.coverAlt}
             loading="lazy"
             decoding="async"
@@ -94,7 +95,7 @@ export function PropertyCard({ property, index }: { property: Property; index: n
       <div className="property-card__media">
         {property.cover ? (
           <img
-            src={property.cover}
+            src={optSrc(property.cover)}
             alt={property.coverAlt}
             loading="lazy"
             decoding="async"
@@ -177,7 +178,7 @@ export function NewsCard({ item, index }: { item: NewsItem; index: number }) {
     <Link to={localizePath(`/insight/${item.slug}`, lang)} className="news-card">
       <span className="news-card__media">
         <img
-          src={newsCover(item.slug)}
+          src={optSrc(newsCover(item.slug))}
           alt={newsCoverAltFor(item.slug, lang, item.title)}
           loading="lazy"
           decoding="async"

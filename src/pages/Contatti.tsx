@@ -472,7 +472,7 @@ export function Contatti() {
       <section className="section section--dark contact-office">
         <div className="contact-office__media">
           <img
-            src="/img/covers/poretcast-01.jpg"
+            src="/img/covers/poretcast-01.webp"
             alt={t("Il set del PoretCast negli spazi produttivi Corax")}
             loading="lazy"
             width={1600}

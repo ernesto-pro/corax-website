@@ -7,6 +7,7 @@ import type { TalentCategory } from "../data/talents";
 import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
+import { optSrc } from "../lib/img";
 
 /** Fixed order keeps the filter bar stable as the roster grows. */
 const categories: TalentCategory[] = [
@@ -103,7 +104,7 @@ export function Talent() {
               <div className="talent-row__name">
                 <span className="talent-row__photo">
                   <img
-                    src={`/img/talents/${talent.slug}.jpg`}
+                    src={optSrc(`/img/talents/${talent.slug}.jpg`)}
                     alt=""
                     loading="lazy"
                     decoding="async"

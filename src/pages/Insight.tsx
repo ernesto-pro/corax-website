@@ -10,6 +10,7 @@ import { categoryLabel } from "../i18n/content";
 import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
+import { optSrc } from "../lib/img";
 
 const categories = ["Tutte", "Azienda", "Campagne", "Media", "Talent", "Premi"] as const;
 
@@ -69,7 +70,7 @@ export function Insight() {
         <Link to={to(`/insight/${featured.slug}`)} className="insight-feature__card">
           <div className="insight-feature__media">
             <img
-              src={newsCover(featured.slug)}
+              src={optSrc(newsCover(featured.slug))}
               alt={newsCoverAltFor(featured.slug, lang, featured.title)}
               width={1600}
               height={900}

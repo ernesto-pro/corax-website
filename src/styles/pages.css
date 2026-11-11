@@ -362,7 +362,26 @@
   transform: translateY(-3px);
 }
 
+.unit-card__glyph {
+  position: absolute;
+  right: 8px;
+  top: 44px;
+  font-size: clamp(88px, 9vw, 132px);
+  font-weight: 600;
+  line-height: 0.8;
+  letter-spacing: -0.07em;
+  color: color-mix(in srgb, var(--accent) 14%, transparent);
+  pointer-events: none;
+  user-select: none;
+  transition: color 0.4s var(--ease), transform 0.5s var(--ease-out);
+}
+.unit-card:hover .unit-card__glyph {
+  color: color-mix(in srgb, var(--accent) 30%, transparent);
+  transform: translateY(-4px);
+}
+
 .unit-card__top {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;

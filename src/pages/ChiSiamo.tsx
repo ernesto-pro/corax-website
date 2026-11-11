@@ -160,7 +160,7 @@ export function ChiSiamo() {
       <section className="section section--dark about-office">
         <div className="about-office__media">
           <img
-            src="/img/covers/poretcast-01.jpg"
+            src="/img/covers/poretcast-01.webp"
             alt={t("Il set del PoretCast negli spazi produttivi Corax")}
             loading="lazy"
             width={1600}

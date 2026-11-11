@@ -14,6 +14,7 @@ import { ProjectCard } from "./Cards";
 import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
+import { optSrc } from "../lib/img";
 
 type ViewMode = "grid" | "index";
 
@@ -200,7 +201,7 @@ export function ProjectExplorer({ limit }: { limit?: number }) {
                   {project.cover && (
                     <img
                       className="project-index__thumb"
-                      src={project.cover}
+                      src={optSrc(project.cover)}
                       alt={project.coverAlt}
                       loading="lazy"
                       decoding="async"
@@ -233,7 +234,7 @@ export function ProjectExplorer({ limit }: { limit?: number }) {
                 <div className="project-index__preview-card" key={preview.slug}>
                   {preview.cover ? (
                     <img
-                      src={preview.cover}
+                      src={optSrc(preview.cover)}
                       alt=""
                       loading="lazy"
                       decoding="async"

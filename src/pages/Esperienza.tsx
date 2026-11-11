@@ -17,6 +17,7 @@ import type { VelaUnit } from "../data/experience";
 import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
+import { optSrc } from "../lib/img";
 
 const VelaScene = lazy(() => import("../components/experience/VelaScene"));
 
@@ -175,7 +176,7 @@ function UnitDialog({ unit, onClose }: { unit: VelaUnit; onClose: () => void }) 
                   <Link to={to(`/progetti/${project.slug}`)} onClick={onClose}>
                     {project.thumb && (
                       <img
-                        src={project.thumb}
+                        src={optSrc(project.thumb)}
                         alt=""
                         width={96}
                         height={64}
@@ -552,7 +553,7 @@ export function Esperienza() {
                         <Link to={to(`/progetti/${project.slug}`)}>
                           {project.thumb && (
                             <img
-                              src={project.thumb}
+                              src={optSrc(project.thumb)}
                               alt=""
                               width={96}
                               height={64}

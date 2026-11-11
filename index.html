@@ -40,13 +40,32 @@
     <link rel="preload" href="/fonts/YgroSans-Book.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 721px)" />
     <link rel="preload" href="/fonts/YgroSans-Bold.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 721px)" />
     <script>
-      document.documentElement.classList.add("js");
-      // Failsafe: se il bundle tarda, il contenuto non resta nascosto.
-      setTimeout(function () {
-        document.querySelectorAll(".reveal:not(.is-in)").forEach(function (el) {
-          el.classList.add("is-in");
-        });
-      }, 2000);
+      (function () {
+        var doc = document;
+        doc.documentElement.classList.add("js");
+        function init() {
+          var nodes = doc.querySelectorAll(".reveal:not(.is-in)");
+          if (!("IntersectionObserver" in window)) {
+            nodes.forEach(function (el) { el.classList.add("is-in"); });
+            return;
+          }
+          // Reveal without waiting for React: the page is already complete in HTML.
+          var io = new IntersectionObserver(function (entries) {
+            for (var i = 0; i < entries.length; i++) {
+              if (entries[i].isIntersecting) {
+                entries[i].target.classList.add("is-in");
+                io.unobserve(entries[i].target);
+              }
+            }
+          }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+          nodes.forEach(function (el) { io.observe(el); });
+          new MutationObserver(function () {
+            doc.querySelectorAll(".reveal:not(.is-in)").forEach(function (el) { io.observe(el); });
+          }).observe(doc.body, { childList: true, subtree: true });
+        }
+        if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", init, { once: true });
+        else init();
+      })();
     </script>
     <!--app-head-->
   </head>
