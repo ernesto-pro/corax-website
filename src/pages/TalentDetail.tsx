@@ -231,8 +231,20 @@ export function TalentDetail() {
         <div className="talent-detail__related-grid">
           {related.map((x) => (
             <Link key={x.slug} to={to(`/talent/${x.slug}`)} className="talent-mini">
-              <h3>{x.name}</h3>
-              <p>{x.categories.join(" · ")}</p>
+              <span className="talent-mini__media">
+                <img
+                  src={`/img/talents/${x.slug}.jpg`}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  width={800}
+                  height={1000}
+                />
+              </span>
+              <span className="talent-mini__text">
+                <h3>{x.name}</h3>
+                <p>{x.categories.join(" · ")}</p>
+              </span>
               <ArrowUpRight size={16} strokeWidth={1.4} aria-hidden />
             </Link>
           ))}

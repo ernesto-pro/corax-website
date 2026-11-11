@@ -101,8 +101,22 @@ export function Talent() {
             <Link to={to(`/talent/${talent.slug}`)} className="talent-row" key={talent.slug}>
               <span className="talent-row__index">{String(i + 1).padStart(2, "0")}</span>
               <div className="talent-row__name">
-                <h3>{talent.name}</h3>
-                {talent.property && <span className="talent-row__property">{talent.property}</span>}
+                <span className="talent-row__photo">
+                  <img
+                    src={`/img/talents/${talent.slug}.jpg`}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    width={800}
+                    height={1000}
+                  />
+                </span>
+                <span className="talent-row__label">
+                  <h3>{talent.name}</h3>
+                  {talent.property && (
+                    <span className="talent-row__property">{talent.property}</span>
+                  )}
+                </span>
               </div>
               <p className="talent-row__note">{talent.note}</p>
               <span className="talent-row__cats">{talent.categories.join(" · ")}</span>

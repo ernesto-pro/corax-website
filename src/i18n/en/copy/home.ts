@@ -49,6 +49,8 @@ export const homeCopy: Record<string, string> = {
   "nuovi format nel 2026": "new formats in 2026",
   "Leader della Crescita": "Leader della Crescita",
   "Leader della Crescita 2026": "Leader della Crescita 2026",
+  "Quattro persone del team Corax in posa su fondo scuro":
+    "Four members of the Corax team posing against a dark background",
   "Il sistema": "The system",
   "Quattro unit.": "Four units.",
   "Una sola regia.": "One direction.",

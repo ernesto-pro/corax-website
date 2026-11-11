@@ -73,8 +73,8 @@ export const properties: Property[] = [
       "Ambiente, cibo, mobilità, lavoro, diversità: Immedia affronta la sostenibilità come una questione culturale e quotidiana, traducendo dati e ricerche in contenuti accessibili, con il tono di chi sa intrattenere.",
       "La piattaforma vive su Instagram, TikTok e YouTube, con format seriali, collaborazioni e operazioni speciali. È un presidio editoriale che permette a brand e istituzioni di avvicinare il tema senza banalizzarlo.",
     ],
-    cover: "/img/covers/babaco-01.jpg",
-    coverAlt: "Giovanni Storti con un cesto di verdure fresche, simbolo del racconto Immedia",
+    cover: "/img/covers/immedia.jpg",
+    coverAlt: "Giovanni Storti a braccia aperte tra gli alberi in fiore per Immedia",
     accent: "#c8ff4d",
     stats: [
       { value: "4+", label: "canali" },
@@ -138,8 +138,8 @@ export const properties: Property[] = [
       "TTP nasce per costruire un ponte tra le competenze tecniche e la capacità di raccontarle. Un programma pensato per far emergere nuove voci, sperimentare nuovi formati e alimentare l'ecosistema di Corax.",
       "Il progetto si inserisce nella strategia di crescita del gruppo, che nel 2026 punta a 20 nuovi format e a un ampliamento significativo degli spazi produttivi.",
     ],
-    cover: null,
-    coverAlt: "TTP — Tech Talent Factory, il programma Corax",
+    cover: "/img/covers/tech.jpg",
+    coverAlt: "Dispositivi digitali per il programma TTP — Tech Talent Factory",
     accent: "#c8ff4d",
     stats: [
       { value: "2025", label: "lancio" },
@@ -164,8 +164,8 @@ export const properties: Property[] = [
       "Profili strutturati, filtri intelligenti e un flusso di contatto diretto: Influenceritalia riduce la distanza tra un brief e la persona giusta per raccontarlo.",
       "La piattaforma è parte dell'ecosistema tecnologico di Corax, insieme a CRM, dashboard e strumenti di misurazione sviluppati internamente.",
     ],
-    cover: null,
-    coverAlt: "Influenceritalia, piattaforma Corax",
+    cover: "/img/covers/influenceritalia.jpg",
+    coverAlt: "Il logo Influenceritalia su fondo rosa",
     accent: "#5b3df5",
     stats: [
       { value: "FULL STACK", label: "sviluppo" },

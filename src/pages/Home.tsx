@@ -4,6 +4,7 @@ import { ArrowDown, ArrowUpRight, MapPin, Sparkles } from "lucide-react";
 import { site } from "../data/site";
 import { clients } from "../data/projects";
 import { ProjectCard, PropertyCard, NewsCard, ShowreelTrigger } from "../components/Cards";
+import { BrandLogo } from "../components/BrandLogo";
 import { FAQ } from "../components/FAQ";
 import { GrowthScan } from "../components/GrowthScan";
 import { InstagramLive } from "../components/Instagram";
@@ -436,9 +437,21 @@ export function Home() {
               className="talent-mini"
               key={talent.slug}
             >
+              <span className="talent-mini__media">
+                <img
+                  src={`/img/talents/${talent.slug}.jpg`}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  width={800}
+                  height={1000}
+                />
+              </span>
+              <span className="talent-mini__text">
+                <h3>{talent.name}</h3>
+                <p>{talent.categories.join(" · ")}</p>
+              </span>
               <span className="talent-mini__index">{String(i + 1).padStart(2, "0")}</span>
-              <h3>{talent.name}</h3>
-              <p>{talent.categories.join(" · ")}</p>
               <ArrowUpRight size={16} strokeWidth={1.4} aria-hidden />
             </Link>
           ))}
@@ -473,8 +486,13 @@ export function Home() {
               className="client-teaser__card"
               style={{ ["--accent" as string]: client.accent }}
             >
-              <span className="client-teaser__mono" aria-hidden>
-                {client.monogram}
+              <span className="client-teaser__logo">
+                <BrandLogo
+                  name={client.name}
+                  monogram={client.monogram}
+                  plain
+                  decorative
+                />
               </span>
               <span className="client-teaser__name">
                 <h3>{client.name}</h3>
@@ -486,14 +504,9 @@ export function Home() {
         </div>
 
         <div className="logo-wall" aria-label={t("Brand e partner Corax")}>
-          {clients.map((client, i) => (
-            <span
-              key={client}
-              className={`logo-wall__item ${i % 7 === 0 ? "is-serif" : ""} ${
-                i % 5 === 0 ? "is-strong" : ""
-              }`}
-            >
-              {client}
+          {clients.map((client) => (
+            <span key={client} className="logo-wall__item logo-wall__item--logo">
+              <BrandLogo name={client} plain />
             </span>
           ))}
         </div>
@@ -521,6 +534,16 @@ export function Home() {
 
         <div className="press__grid">
           <Link to={to("/insight/leader-della-crescita-2026")} className="press-feature">
+            <span className="press-feature__media">
+              <img
+                src="/img/covers/leader.jpg"
+                alt={t("Quattro persone del team Corax in posa su fondo scuro")}
+                loading="lazy"
+                decoding="async"
+                width={1600}
+                height={900}
+              />
+            </span>
             <span className="press-feature__award">Il Sole 24 Ore</span>
             <h3>{t("Leader della Crescita 2026")}</h3>
             <p>

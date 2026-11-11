@@ -3,6 +3,7 @@ import { ArrowUpRight, Play } from "lucide-react";
 import type { Project } from "../data/projects";
 import type { Property } from "../data/properties";
 import type { NewsItem } from "../data/news";
+import { newsCover, newsCoverAltFor } from "../data/newsCovers";
 import type { Client } from "../data/clients";
 import { BrandLogo } from "./BrandLogo";
 import { categoryLabel } from "../i18n/content";
@@ -174,18 +175,30 @@ export function NewsCard({ item, index }: { item: NewsItem; index: number }) {
   const lang = useLang();
   return (
     <Link to={localizePath(`/insight/${item.slug}`, lang)} className="news-card">
-      <div className="news-card__meta">
-        <span>{item.source}</span>
-        <span>{item.displayDate}</span>
+      <span className="news-card__media">
+        <img
+          src={newsCover(item.slug)}
+          alt={newsCoverAltFor(item.slug, lang, item.title)}
+          loading="lazy"
+          decoding="async"
+          width={1600}
+          height={900}
+        />
+      </span>
+      <div className="news-card__body">
+        <div className="news-card__meta">
+          <span>{item.source}</span>
+          <span>{item.displayDate}</span>
+        </div>
+        <span className="news-card__cat">
+          {lang === "en" ? categoryLabel[item.category] ?? item.category : item.category}
+        </span>
+        <h3>{item.title}</h3>
+        <p>{item.excerpt}</p>
+        <span className="news-card__link">
+          {t("Leggi")} <ArrowUpRight size={14} aria-hidden />
+        </span>
       </div>
-      <span className="news-card__cat">
-        {lang === "en" ? categoryLabel[item.category] ?? item.category : item.category}
-      </span>
-      <h3>{item.title}</h3>
-      <p>{item.excerpt}</p>
-      <span className="news-card__link">
-        {t("Leggi")} <ArrowUpRight size={14} aria-hidden />
-      </span>
       <span className="news-card__index">{String(index + 1).padStart(2, "0")}</span>
     </Link>
   );

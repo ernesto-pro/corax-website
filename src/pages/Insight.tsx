@@ -5,7 +5,7 @@ import { PageHero, CTABand } from "../components/PageHero";
 import { NewsCard } from "../components/Cards";
 import { Marquee } from "../components/UI";
 import type { NewsItem } from "../data/news";
-import { newsCover, newsCoverAlt } from "../data/newsCovers";
+import { newsCover, newsCoverAltFor } from "../data/newsCovers";
 import { categoryLabel } from "../i18n/content";
 import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
@@ -70,7 +70,7 @@ export function Insight() {
           <div className="insight-feature__media">
             <img
               src={newsCover(featured.slug)}
-              alt={t(newsCoverAlt[featured.slug] ?? featured.title)}
+              alt={newsCoverAltFor(featured.slug, lang, featured.title)}
               width={1600}
               height={900}
               fetchPriority="high"

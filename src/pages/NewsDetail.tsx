@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowUpRight, CalendarDays, Newspaper } from "lucide-react";
-import { newsCover, newsCoverAlt } from "../data/newsCovers";
+import { newsCover, newsCoverAltFor } from "../data/newsCovers";
 import type { NewsItem } from "../data/news";
 import { Breadcrumbs, CTABand } from "../components/PageHero";
 import { ArrowLink } from "../components/UI";
@@ -68,7 +68,7 @@ export function NewsDetail() {
       <figure className="news-article__cover">
         <img
           src={newsCover(article.slug)}
-          alt={t(newsCoverAlt[article.slug] ?? article.title)}
+          alt={newsCoverAltFor(article.slug, lang, article.title)}
           width={1600}
           height={900}
         />

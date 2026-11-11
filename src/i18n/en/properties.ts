@@ -45,7 +45,7 @@ export const propertiesTr: Record<string, PropertyTr> = {
       "Environment, food, mobility, work, diversity: Immedia treats sustainability as a cultural, everyday matter, translating data and research into accessible content, with the tone of someone who knows how to entertain.",
       "The platform lives on Instagram, TikTok and YouTube, with serial formats, collaborations and special operations. It's an editorial outpost that lets brands and institutions approach the topic without trivialising it.",
     ],
-    coverAlt: "Giovanni Storti with a basket of fresh vegetables, symbol of the Immedia story",
+    coverAlt: "Giovanni Storti with open arms among blossoming trees for Immedia",
     stats: [
       { value: "4+", label: "channels" },
       { value: "100%", label: "original" },
@@ -99,7 +99,7 @@ export const propertiesTr: Record<string, PropertyTr> = {
       "TTP was created to build a bridge between technical skills and the ability to tell their story. A programme designed to surface new voices, experiment with new formats and feed the Corax ecosystem.",
       "The project is part of the group's growth strategy, which in 2026 targets 20 new formats and a significant expansion of production spaces.",
     ],
-    coverAlt: "TTP — Tech Talent Factory, the Corax programme",
+    coverAlt: "Digital devices for the TTP — Tech Talent Factory programme",
     stats: [
       { value: "2025", label: "launch" },
       { value: "TECH", label: "vertical" },
@@ -120,7 +120,7 @@ export const propertiesTr: Record<string, PropertyTr> = {
       "Structured profiles, smart filters and a direct contact flow: Influenceritalia shortens the distance between a brief and the right person to tell it.",
       "The platform is part of Corax's technology ecosystem, alongside CRMs, dashboards and measurement tools developed in-house.",
     ],
-    coverAlt: "Influenceritalia, a Corax platform",
+    coverAlt: "The Influenceritalia logo on a pink background",
     stats: [
       { value: "FULL STACK", label: "development" },
       { value: "MATCH", label: "brands and creators" },

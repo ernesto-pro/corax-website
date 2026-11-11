@@ -46,10 +46,10 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Podcast & Format", "Produzione", "Social & Performance"],
     excerpt:
       "The multichannel editorial platform devoted to sustainability, born with Giovanni Storti and science communicator Arianna Izzi.",
-    coverAlt: "Giovanni Storti with a basket of vegetables in the countryside",
+    coverAlt: "Giovanni Storti with open arms among blossoming trees for Immedia",
     gallery: [
-      { src: "/img/covers/babaco-01.jpg", alt: "Giovanni Storti and the basket of vegetables" },
-      { src: "/img/covers/cooking-hands.jpg", alt: "The kitchen as a way of talking about sustainability" },
+      { src: "/img/covers/immedia.jpg", alt: "Giovanni Storti in the greenery for Immedia" },
+      { src: "/img/covers/giova-nature.jpg", alt: "Giovanni Storti in his garden" },
     ],
     tags: ["Sustainability", "Publishing", "Social", "Format"],
     intro:
@@ -247,10 +247,10 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Branded Entertainment", "Influencer Marketing"],
     excerpt:
       "One tree, one story: the campaign that brought Giovanni Storti's voice into the reforestation narrative.",
-    coverAlt: "One tree, one story: the green theme of the Treedom campaign",
+    coverAlt: "Giovanni Storti among the olive trees for the Treedom campaign",
     gallery: [
-      { src: "/img/covers/babaco-02.jpg", alt: "The greenery of the Treedom campaign" },
-      { src: "/img/covers/plate-salad.jpg", alt: "The theme of sustainable food" },
+      { src: "/img/covers/treedom.jpg", alt: "Giovanni Storti among the olive trees" },
+      { src: "/img/covers/giova-nature.jpg", alt: "The greenery of Giovanni Storti's garden" },
     ],
     tags: ["Green", "Talent", "Purpose", "Social"],
     intro:
@@ -278,10 +278,10 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Podcast & Format", "Produzione", "Social & Performance"],
     excerpt:
       "Giovanni Storti's green format: nature, curiosity and science communication with the tone of someone who doesn't take himself too seriously.",
-    coverAlt: "Nature and science communication in the Giova loves nature format",
+    coverAlt: "Giovanni Storti in the greenery for the Giova loves nature format",
     gallery: [
-      { src: "/img/covers/babaco-01.jpg", alt: "Giovanni Storti in the greenery" },
-      { src: "/img/covers/plate-salad.jpg", alt: "Nature and the table" },
+      { src: "/img/covers/giova-nature.jpg", alt: "Giovanni Storti in his garden" },
+      { src: "/img/covers/immedia.jpg", alt: "Giovanni Storti with open arms among the trees" },
     ],
     tags: ["Green", "Format", "Science communication", "Talent"],
     intro:
@@ -309,10 +309,10 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Influencer Marketing", "Branded Entertainment", "Produzione"],
     excerpt:
       "Gaming, football and irony: PirlasV brings PlayStation into his community with a piece of content built to feel real.",
-    coverAlt: "A football held in the players' hands",
+    coverAlt: "The two faces of PirlasV in a portrait",
     gallery: [
-      { src: "/img/covers/football-ball.jpg", alt: "The ball at the centre of the story" },
-      { src: "/img/covers/football-duo.jpg", alt: "The protagonists on the pitch" },
+      { src: "/img/covers/pirlasv.jpg", alt: "PirlasV" },
+      { src: "/img/covers/football-ball.jpg", alt: "A football at the centre of the story" },
     ],
     tags: ["Gaming", "Sport", "Talent", "Creator"],
     intro:
@@ -340,9 +340,9 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Produzione", "Branded Entertainment"],
     excerpt:
       "Video production for Tiffany's events: light, material and detail in the service of a luxury icon.",
-    coverAlt: "A Tiffany & Co. event with a luminous set-up",
+    coverAlt: "A set table at a Tiffany & Co. event",
     gallery: [
-      { src: "/img/covers/tiffany-event.jpg", alt: "The Tiffany & Co. event" },
+      { src: "/img/covers/tiffany.jpg", alt: "A Tiffany & Co. event" },
       { src: "/img/covers/tiffany-necklace.jpg", alt: "The collection on display" },
     ],
     tags: ["Luxury", "Events", "Production", "OOH"],
@@ -371,10 +371,10 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Podcast & Format", "Produzione", "Branded Entertainment"],
     excerpt:
       "The talk that takes football off the pitch: voices, stories and protagonists from Italy's best-loved game.",
-    coverAlt: "The team on the pitch during Kick off Talk",
+    coverAlt: "Two guests at the Kick off Talk table",
     gallery: [
-      { src: "/img/covers/football-lineup.jpg", alt: "The team on the pitch" },
-      { src: "/img/covers/football-team.jpg", alt: "The group of protagonists" },
+      { src: "/img/covers/kickoff.jpg", alt: "The Kick off Talk table" },
+      { src: "/img/covers/football-team2.jpg", alt: "A Kick off Talk guest in the studio" },
     ],
     tags: ["Sport", "Talk", "Format", "Production"],
     intro:
@@ -403,10 +403,10 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Influencer Marketing", "Social & Performance"],
     excerpt:
       "A trip, a community, a prize: the project that turned a contest into a shared story.",
-    coverAlt: "The trip as the prize: the Nivea project",
+    coverAlt: "The Vola a Madrid with Nivea booklet and the official Real Madrid ball",
     gallery: [
-      { src: "/img/covers/citroen-02.jpg", alt: "The journey to Madrid" },
-      { src: "/img/covers/citroen-01.jpg", alt: "Telling the experience" },
+      { src: "/img/covers/nivea.jpg", alt: "The Nivea contest prize" },
+      { src: "/img/covers/citroen-01.jpg", alt: "Telling the journey" },
     ],
     tags: ["Beauty", "Contest", "Creator", "Social"],
     intro:
@@ -434,10 +434,10 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Branded Entertainment", "Influencer Marketing", "Produzione"],
     excerpt:
       "A format that turns real estate storytelling into entertainment, through Frank Gramuglia's irreverent eye.",
-    coverAlt: "An elegant, light-filled interior",
+    coverAlt: "Frank Gramuglia with a Brioschi bottle on the campaign set",
     gallery: [
-      { src: "/img/covers/tiffany-interior.jpg", alt: "An elegant interior" },
-      { src: "/img/covers/tiffany-event.jpg", alt: "An event in the spirit of the project" },
+      { src: "/img/covers/brioschi.jpg", alt: "Frank Gramuglia on the Brioschi set" },
+      { src: "/img/covers/citroen-01.jpg", alt: "Frank Gramuglia behind the wheel of a Citroën Ami" },
     ],
     tags: ["Real Estate", "Talent", "Format", "Social"],
     intro:
@@ -497,10 +497,10 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Produzione", "Podcast & Format"],
     excerpt:
       "A video project exploring the hidden side of stories: documentary language, contemporary pace.",
-    coverAlt: "An interior portrait with a cinematic feel",
+    coverAlt: "An interior portrait with a documentary feel",
     gallery: [
-      { src: "/img/covers/risparmio-03.jpg", alt: "Portrait with a cinematic feel" },
-      { src: "/img/covers/risparmio-04.jpg", alt: "A moment from an interview" },
+      { src: "/img/covers/side.jpg", alt: "A portrait with a documentary feel" },
+      { src: "/img/covers/la-vela.jpg", alt: "An interior at La Vela" },
     ],
     tags: ["Documentary", "Video", "Production", "Storytelling"],
     intro:
@@ -528,8 +528,8 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Design & Tech", "Influencer Marketing"],
     excerpt:
       "The platform that connects brands and creators, built to make selection simple and transparent.",
-    coverAlt: "The Influenceritalia logo and ecosystem",
-    gallery: [],
+    coverAlt: "The Influenceritalia logo on a pink background",
+    gallery: [{ src: "/img/covers/influenceritalia.jpg", alt: "The Influenceritalia logo" }],
     tags: ["Platform", "Creator Economy", "Product", "Tech"],
     intro:
       "Influenceritalia is the proprietary platform at the heart of the Corax system, connecting brands with the creators best suited to their campaigns. A tech product born from the daily experience of the talent agency and the Agency unit.",
@@ -557,10 +557,10 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Design & Tech", "Podcast & Format", "Social & Performance"],
     excerpt:
       "The digital editorial project devoted to football and popular culture, with a proprietary app.",
-    coverAlt: "The Numero Diez players on the pitch",
+    coverAlt: "Four footballers in blue shirts at the stadium",
     gallery: [
-      { src: "/img/covers/football-team2.jpg", alt: "The Numero Diez team" },
-      { src: "/img/covers/football-player.jpg", alt: "A portrait from the pitch" },
+      { src: "/img/covers/football-lineup.jpg", alt: "Four footballers in blue shirts" },
+      { src: "/img/covers/football-ball.jpg", alt: "A signed Champions League ball" },
     ],
     tags: ["Publishing", "Sport", "App", "Community"],
     intro:
@@ -589,10 +589,8 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Branded Entertainment", "Podcast & Format", "Social & Performance"],
     excerpt:
       "Thirteen years of social experiments become an editorial partner: new phase, new formats, new opportunities.",
-    coverAlt: "theShow: thirteen years of social experiments",
-    gallery: [
-      { src: "/img/covers/tiffany-event.jpg", alt: "A live event produced by the Corax system" },
-    ],
+    coverAlt: "The vintage television that symbolises the theShow format",
+    gallery: [{ src: "/img/covers/theshow.jpg", alt: "theShow's vintage television" }],
     tags: ["Creator", "Entertainment", "Format", "Partnership"],
     intro:
       "After more than thirteen years of social experiments, candid camera stunts and formats that got millions of people talking online, theShow joins the Corax system. A partnership that combines the speed of vertical content with the depth of the horizontal format.",
@@ -620,22 +618,9 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Design & Tech", "Social & Performance"],
     excerpt:
       "Five questions, thirty seconds, a score from 25 to 100. The tool that turns a first contact into a brief.",
-    coverAlt: "Corax Score: the test that measures how ready a brand is to grow",
-    gallery: [{ src: "/img/og-cover.jpg", alt: "Corax Score shown in the editorial visual" }],
-    tags: ["Product", "Diagnostics", "Lead generation", "UX"],
-    intro:
-      "Corax Score is the proprietary tool that opens a conversation with a number instead of a form. Five questions built on the signals that matter — goal, starting point, assets, timing and measurement — and an immediate result: score, level, recommended unit and three concrete moves.",
-    challenge:
-      "Opening a commercial conversation without the rhetoric of the generic contact form. Most online tests ask for an email before saying anything useful: we wanted to do the opposite.",
-    approach:
-      "We reduced the diagnosis to five questions, each with four possible answers, and built a scoring system from 25 to 100 with four levels. The result generates a profile of the need, a mix across the four units and a pre-filled brief that guides the person towards contact.",
-    deliverables: [
-      "Product design and test flow",
-      "Scoring model and four levels",
-      "Profile radar and unit mix",
-      "Brief pre-filled via URL",
-      "Keyboard-accessible interface",
-      "Copy and microcopy in Italian",
+    coverAlt: "The Corax Score interface with the five-question test",
+    gallery: [
+      { src: "/img/covers/corax-score.jpg", alt: "The Corax Score test" },
     ],
     results: [
       { value: "5", label: "questions" },
@@ -650,9 +635,9 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Produzione", "Design & Tech"],
     excerpt:
       "1,500 sqm in Milan between offices and production studios. The space where the Corax system takes shape every day.",
-    coverAlt: "Corax's growth told through the numbers of La Vela",
+    coverAlt: "The interiors of La Vela, the Corax house in Milan",
     gallery: [
-      { src: "/img/covers/news-results.jpg", alt: "The numbers of Corax's growth" },
+      { src: "/img/covers/la-vela.jpg", alt: "The spaces of La Vela" },
       { src: "/img/covers/poretcast-01.jpg", alt: "One of La Vela's production studios" },
     ],
     tags: ["Headquarters", "Production", "Milan", "Community"],
@@ -721,9 +706,10 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Social & Performance", "Produzione"],
     excerpt:
       "The story of those who build the system: strategy, production, talent and tech in the same room.",
-    coverAlt: "The 73 people who make up the Corax system",
+    coverAlt: "Six portraits of the people working at Corax",
     gallery: [
-      { src: "/img/covers/tiffany-event.jpg", alt: "A live gathering of the Corax team" },
+      { src: "/img/covers/persone.jpg", alt: "The people of the Corax team" },
+      { src: "/img/covers/la-vela.jpg", alt: "The spaces of La Vela" },
     ],
     tags: ["Employer branding", "People", "Culture", "Milan"],
     intro:
@@ -753,10 +739,10 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Branded Entertainment", "Podcast & Format"],
     excerpt:
       "Giacomo Poretti as Honorary President: a new role to support the growth of the system and its properties.",
-    coverAlt: "Giacomo Poretti on the PoretCast set",
+    coverAlt: "Portrait of Giacomo Poretti",
     gallery: [
+      { src: "/img/covers/presidenza.jpg", alt: "Giacomo Poretti" },
       { src: "/img/covers/poretcast-01.jpg", alt: "The PoretCast set" },
-      { src: "/img/covers/news-leader.jpg", alt: "The growth of the Corax system" },
     ],
     tags: ["Governance", "Talent", "Publishing", "Partnership"],
     intro:
@@ -786,7 +772,7 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Social & Performance", "Produzione"],
     excerpt:
       "€8 million in 2025 revenue, +45% on 2024. Corax joins the ranking of Italy's fastest-growing companies.",
-    coverAlt: "Corax in Il Sole 24 Ore's Leader della Crescita 2026",
+    coverAlt: "Four members of the Corax team posing against a dark background",
     gallery: [
       { src: "/img/covers/news-leader.jpg", alt: "The Il Sole 24 Ore award" },
       { src: "/img/covers/news-results.jpg", alt: "The numbers of Corax's growth" },
@@ -819,9 +805,9 @@ export const projectsTr: Record<string, ProjectTr> = {
     categories: ["Social & Performance", "Influencer Marketing"],
     excerpt:
       "A new leader for the Agency unit: social, influencer marketing and branded entertainment under one direction.",
-    coverAlt: "Pierfrancesco Petrosillo, Chief Agency Officer at Corax",
+    coverAlt: "Pierfrancesco Petrosillo during a television interview",
     gallery: [
-      { src: "/img/covers/tiffany-event.jpg", alt: "An event produced by the Agency unit" },
+      { src: "/img/covers/petrosillo.jpg", alt: "Pierfrancesco Petrosillo, Chief Agency Officer at Corax" },
     ],
     tags: ["Leadership", "Agency", "Influencer marketing", "Governance"],
     intro:

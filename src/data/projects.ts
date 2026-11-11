@@ -84,11 +84,11 @@ export const projects: Project[] = [
     unit: "Media House",
     excerpt:
       "La piattaforma editoriale multicanale dedicata alla sostenibilità, nata con Giovanni Storti e la divulgatrice scientifica Arianna Izzi.",
-    cover: "/img/covers/babaco-01.jpg",
-    coverAlt: "Giovanni Storti con un cesto di ortaggi nel verde",
+    cover: "/img/covers/immedia.jpg",
+    coverAlt: "Giovanni Storti a braccia aperte tra gli alberi in fiore per Immedia",
     gallery: [
-      { src: "/img/covers/babaco-01.jpg", alt: "Giovanni Storti e il cesto di ortaggi" },
-      { src: "/img/covers/cooking-hands.jpg", alt: "La cucina come racconto della sostenibilità" },
+      { src: "/img/covers/immedia.jpg", alt: "Giovanni Storti nel verde per Immedia" },
+      { src: "/img/covers/giova-nature.jpg", alt: "Giovanni Storti nel suo giardino" },
     ],
     featured: true,
     tags: ["Sostenibilità", "Editoria", "Social", "Format"],
@@ -320,11 +320,11 @@ export const projects: Project[] = [
     unit: "Talent",
     excerpt:
       "Un albero, una storia: la campagna che ha portato la voce di Giovanni Storti nel racconto della riforestazione.",
-    cover: null,
-    coverAlt: "Un albero, una storia: il tema green della campagna Treedom",
+    cover: "/img/covers/treedom.jpg",
+    coverAlt: "Giovanni Storti tra gli ulivi per la campagna Treedom",
     gallery: [
-      { src: "/img/covers/babaco-02.jpg", alt: "Il verde della campagna Treedom" },
-      { src: "/img/covers/plate-salad.jpg", alt: "Il tema del cibo sostenibile" },
+      { src: "/img/covers/treedom.jpg", alt: "Giovanni Storti tra gli ulivi" },
+      { src: "/img/covers/giova-nature.jpg", alt: "Il verde del giardino di Giovanni Storti" },
     ],
     accent: "#b07a4a",
     monogram: "TR",
@@ -358,11 +358,11 @@ export const projects: Project[] = [
     unit: "Media House",
     excerpt:
       "Il format green di Giovanni Storti: natura, curiosità e divulgazione con il tono di chi non si prende troppo sul serio.",
-    cover: null,
-    coverAlt: "Natura e divulgazione nel format Giova loves nature",
+    cover: "/img/covers/giova-nature.jpg",
+    coverAlt: "Giovanni Storti nel verde per il format Giova loves nature",
     gallery: [
-      { src: "/img/covers/babaco-01.jpg", alt: "Giovanni Storti nel verde" },
-      { src: "/img/covers/plate-salad.jpg", alt: "Natura e tavola" },
+      { src: "/img/covers/giova-nature.jpg", alt: "Giovanni Storti nel suo giardino" },
+      { src: "/img/covers/immedia.jpg", alt: "Giovanni Storti a braccia aperte tra gli alberi" },
     ],
     accent: "#9bc94a",
     monogram: "GL",
@@ -396,11 +396,11 @@ export const projects: Project[] = [
     unit: "Talent",
     excerpt:
       "Gaming, calcio e ironia: PirlasV porta PlayStation dentro la sua community con un contenuto pensato per essere vero.",
-    cover: "/img/covers/football-ball.jpg",
-    coverAlt: "Un pallone da calcio tra le mani dei giocatori",
+    cover: "/img/covers/pirlasv.jpg",
+    coverAlt: "I due volti di PirlasV in posa",
     gallery: [
+      { src: "/img/covers/pirlasv.jpg", alt: "PirlasV" },
       { src: "/img/covers/football-ball.jpg", alt: "Il pallone al centro del racconto" },
-      { src: "/img/covers/football-duo.jpg", alt: "I protagonisti in campo" },
     ],
     tags: ["Gaming", "Sport", "Talent", "Creator"],
     intro:
@@ -432,10 +432,10 @@ export const projects: Project[] = [
     unit: "Media House",
     excerpt:
       "La produzione video per gli eventi Tiffany: luce, materia e dettaglio al servizio di un'icona del lusso.",
-    cover: "/img/covers/tiffany-event.jpg",
-    coverAlt: "Un evento Tiffany & Co. con allestimento luminoso",
+    cover: "/img/covers/tiffany.jpg",
+    coverAlt: "La tavola apparecchiata di un evento Tiffany & Co.",
     gallery: [
-      { src: "/img/covers/tiffany-event.jpg", alt: "L'evento Tiffany & Co." },
+      { src: "/img/covers/tiffany.jpg", alt: "Un evento Tiffany & Co." },
       { src: "/img/covers/tiffany-necklace.jpg", alt: "La collezione in mostra" },
     ],
     tags: ["Luxury", "Eventi", "Produzione", "OOH"],
@@ -468,11 +468,11 @@ export const projects: Project[] = [
     unit: "Media House",
     excerpt:
       "Il talk che porta il calcio fuori dal campo: voci, storie e protagonisti del gioco più amato d'Italia.",
-    cover: "/img/covers/football-lineup.jpg",
-    coverAlt: "La squadra in campo durante Kick off Talk",
+    cover: "/img/covers/kickoff.jpg",
+    coverAlt: "Due ospiti al tavolo di Kick off Talk",
     gallery: [
-      { src: "/img/covers/football-lineup.jpg", alt: "La squadra in campo" },
-      { src: "/img/covers/football-team.jpg", alt: "Il gruppo dei protagonisti" },
+      { src: "/img/covers/kickoff.jpg", alt: "Il tavolo di Kick off Talk" },
+      { src: "/img/covers/football-team2.jpg", alt: "Un ospite di Kick off Talk in studio" },
     ],
     tags: ["Sport", "Talk", "Format", "Produzione"],
     intro:
@@ -505,11 +505,11 @@ export const projects: Project[] = [
     unit: "Agency",
     excerpt:
       "Un viaggio, una community, un premio: il progetto che ha trasformato un concorso in un racconto condiviso.",
-    cover: null,
-    coverAlt: "Il viaggio come premio: il progetto Nivea",
+    cover: "/img/covers/nivea.jpg",
+    coverAlt: "Il booklet Vola a Madrid con Nivea con il pallone ufficiale del Real Madrid",
     gallery: [
-      { src: "/img/covers/citroen-02.jpg", alt: "Il viaggio verso Madrid" },
-      { src: "/img/covers/citroen-01.jpg", alt: "Il racconto dell'esperienza" },
+      { src: "/img/covers/nivea.jpg", alt: "Il premio del concorso Nivea" },
+      { src: "/img/covers/citroen-01.jpg", alt: "Il racconto del viaggio" },
     ],
     accent: "#2f5bd0",
     monogram: "NI",
@@ -543,11 +543,11 @@ export const projects: Project[] = [
     unit: "Talent",
     excerpt:
       "Un formato che trasforma il racconto immobiliare in intrattenimento, con lo sguardo irriverente di Frank Gramuglia.",
-    cover: "/img/covers/tiffany-interior.jpg",
-    coverAlt: "Un interno elegante e luminoso",
+    cover: "/img/covers/brioschi.jpg",
+    coverAlt: "Frank Gramuglia con una bottiglia Brioschi sul set della campagna",
     gallery: [
-      { src: "/img/covers/tiffany-interior.jpg", alt: "Un interno elegante" },
-      { src: "/img/covers/tiffany-event.jpg", alt: "Un evento nel segno del progetto" },
+      { src: "/img/covers/brioschi.jpg", alt: "Frank Gramuglia sul set Brioschi" },
+      { src: "/img/covers/citroen-01.jpg", alt: "Frank Gramuglia a bordo di una Citroën Ami" },
     ],
     tags: ["Real Estate", "Talent", "Format", "Social"],
     intro:
@@ -616,11 +616,11 @@ export const projects: Project[] = [
     unit: "Media House",
     excerpt:
       "Un progetto video che esplora il lato nascosto delle storie: linguaggio documentario, ritmo contemporaneo.",
-    cover: "/img/covers/risparmio-03.jpg",
-    coverAlt: "Un ritratto in interni dal tono cinematografico",
+    cover: "/img/covers/side.jpg",
+    coverAlt: "Un ritratto in interni dal tono documentario",
     gallery: [
-      { src: "/img/covers/risparmio-03.jpg", alt: "Ritratto dal tono cinematografico" },
-      { src: "/img/covers/risparmio-04.jpg", alt: "Un momento di intervista" },
+      { src: "/img/covers/side.jpg", alt: "Ritratto dal tono documentario" },
+      { src: "/img/covers/la-vela.jpg", alt: "Un interno di La Vela" },
     ],
     tags: ["Documentario", "Video", "Produzione", "Storytelling"],
     intro:
@@ -652,9 +652,9 @@ export const projects: Project[] = [
     unit: "Tech",
     excerpt:
       "La piattaforma che mette in contatto brand e creator, costruita per rendere la selezione semplice e trasparente.",
-    cover: null,
-    coverAlt: "Il logo e l'ecosistema di Influenceritalia",
-    gallery: [],
+    cover: "/img/covers/influenceritalia.jpg",
+    coverAlt: "Il logo Influenceritalia su fondo rosa",
+    gallery: [{ src: "/img/covers/influenceritalia.jpg", alt: "Il logo Influenceritalia" }],
     accent: "#5b3df5",
     monogram: "IN",
     tags: ["Piattaforma", "Creator Economy", "Prodotto", "Tech"],
@@ -688,11 +688,11 @@ export const projects: Project[] = [
     unit: "Tech",
     excerpt:
       "Il progetto editoriale digitale dedicato al calcio e alla cultura popolare, con un'app proprietaria.",
-    cover: "/img/covers/football-team2.jpg",
-    coverAlt: "I giocatori di Numero Diez in campo",
+    cover: "/img/covers/football-lineup.jpg",
+    coverAlt: "Quattro calciatori in maglia blu allo stadio",
     gallery: [
-      { src: "/img/covers/football-team2.jpg", alt: "La squadra di Numero Diez" },
-      { src: "/img/covers/football-player.jpg", alt: "Un ritratto dal campo" },
+      { src: "/img/covers/football-lineup.jpg", alt: "Quattro calciatori in maglia blu" },
+      { src: "/img/covers/football-ball.jpg", alt: "Un pallone da Champions League firmato" },
     ],
     tags: ["Editoria", "Sport", "App", "Community"],
     intro:
@@ -725,10 +725,10 @@ export const projects: Project[] = [
     unit: "Talent",
     excerpt:
       "Tredici anni di esperimenti social diventano un partner editoriale: nuova fase, nuovi format, nuove opportunità.",
-    cover: null,
-    coverAlt: "theShow: tredici anni di esperimenti social",
+    cover: "/img/covers/theshow.jpg",
+    coverAlt: "La televisione vintage simbolo del format theShow",
     gallery: [
-      { src: "/img/covers/tiffany-event.jpg", alt: "Un evento dal vivo prodotto dal sistema Corax" },
+      { src: "/img/covers/theshow.jpg", alt: "La televisione vintage di theShow" },
     ],
     accent: "#ff5a3c",
     monogram: "SH",
@@ -763,9 +763,9 @@ export const projects: Project[] = [
     unit: "Tech",
     excerpt:
       "Cinque domande, trenta secondi, un punteggio da 25 a 100. Lo strumento che trasforma un primo contatto in un brief.",
-    cover: null,
-    coverAlt: "Corax Score: il test che misura quanto è pronta la crescita di un brand",
-    gallery: [{ src: "/img/og-cover.jpg", alt: "Il Corax Score raccontato nel visual editoriale" }],
+    cover: "/img/covers/corax-score.jpg",
+    coverAlt: "L'interfaccia di Corax Score con il test in cinque domande",
+    gallery: [{ src: "/img/covers/corax-score.jpg", alt: "Il test Corax Score" }],
     accent: "#c8ff4d",
     monogram: "CS",
     tags: ["Prodotto", "Diagnostica", "Lead generation", "UX"],
@@ -800,10 +800,10 @@ export const projects: Project[] = [
     unit: "Media House",
     excerpt:
       "1.500 mq a Milano tra uffici e studi di produzione. Lo spazio dove il sistema Corax prende forma ogni giorno.",
-    cover: "/img/covers/news-results.jpg",
-    coverAlt: "La crescita di Corax raccontata nei numeri de La Vela",
+    cover: "/img/covers/la-vela.jpg",
+    coverAlt: "Gli interni di La Vela, la casa Corax a Milano",
     gallery: [
-      { src: "/img/covers/news-results.jpg", alt: "I numeri della crescita Corax" },
+      { src: "/img/covers/la-vela.jpg", alt: "Gli spazi di La Vela" },
       { src: "/img/covers/poretcast-01.jpg", alt: "Uno degli studi di produzione de La Vela" },
     ],
     tags: ["Headquarters", "Produzione", "Milano", "Community"],
@@ -881,9 +881,12 @@ export const projects: Project[] = [
     unit: "Agency",
     excerpt:
       "Il racconto di chi costruisce il sistema: strategy, produzione, talent e tech nella stessa stanza.",
-    cover: null,
-    coverAlt: "Le 73 persone che compongono il sistema Corax",
-    gallery: [{ src: "/img/covers/tiffany-event.jpg", alt: "Un momento di incontro dal vivo del team Corax" }],
+    cover: "/img/covers/persone.jpg",
+    coverAlt: "Sei ritratti delle persone che lavorano in Corax",
+    gallery: [
+      { src: "/img/covers/persone.jpg", alt: "Le persone del team Corax" },
+      { src: "/img/covers/la-vela.jpg", alt: "Gli spazi di La Vela" },
+    ],
     accent: "#ff5a3c",
     monogram: "73",
     tags: ["Employer branding", "Persone", "Cultura", "Milano"],
@@ -918,11 +921,11 @@ export const projects: Project[] = [
     unit: "Talent",
     excerpt:
       "Giacomo Poretti Presidente Onorario: un ruolo nuovo per accompagnare la crescita del sistema e delle sue properties.",
-    cover: "/img/covers/poretcast-01.jpg",
-    coverAlt: "Giacomo Poretti sul set del PoretCast",
+    cover: "/img/covers/presidenza.jpg",
+    coverAlt: "Ritratto di Giacomo Poretti",
     gallery: [
+      { src: "/img/covers/presidenza.jpg", alt: "Giacomo Poretti" },
       { src: "/img/covers/poretcast-01.jpg", alt: "Il set del PoretCast" },
-      { src: "/img/covers/news-leader.jpg", alt: "La crescita del sistema Corax" },
     ],
     tags: ["Governance", "Talento", "Editoria", "Partnership"],
     intro:
@@ -956,8 +959,8 @@ export const projects: Project[] = [
     unit: "Agency",
     excerpt:
       "8 milioni di fatturato 2025, +45% sul 2024. Corax entra nella classifica delle aziende italiane che crescono di più.",
-    cover: "/img/covers/news-leader.jpg",
-    coverAlt: "Corax nei Leader della Crescita 2026 del Sole 24 Ore",
+    cover: "/img/covers/leader.jpg",
+    coverAlt: "Quattro persone del team Corax in posa su fondo scuro",
     gallery: [
       { src: "/img/covers/news-leader.jpg", alt: "Il riconoscimento del Sole 24 Ore" },
       { src: "/img/covers/news-results.jpg", alt: "I numeri della crescita Corax" },
@@ -994,9 +997,9 @@ export const projects: Project[] = [
     unit: "Agency",
     excerpt:
       "Una nuova guida per la unit Agency: social, influencer marketing e branded entertainment sotto la stessa regia.",
-    cover: null,
-    coverAlt: "Pierfrancesco Petrosillo, Chief Agency Officer di Corax",
-    gallery: [{ src: "/img/covers/tiffany-event.jpg", alt: "Un evento prodotto dalla unit Agency" }],
+    cover: "/img/covers/petrosillo.jpg",
+    coverAlt: "Pierfrancesco Petrosillo durante un'intervista televisiva",
+    gallery: [{ src: "/img/covers/petrosillo.jpg", alt: "Pierfrancesco Petrosillo, Chief Agency Officer di Corax" }],
     accent: "#5b3df5",
     monogram: "PP",
     tags: ["Leadership", "Agency", "Influencer marketing", "Governance"],
