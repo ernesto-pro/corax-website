@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#08070d" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="author" content="Corax S.r.l." />
+    <!--seo-fallback-->
+    <title>Corax — Social Media Company | Media, Talent &amp; Branded Entertainment</title>
+    <meta
+      name="description"
+      content="Corax è la social media company italiana che unisce media, talenti, produzione e tecnologia. Podcast, format, influencer marketing e branded entertainment dal 2020."
+    />
+    <link rel="canonical" href="https://corax.it/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="Corax" />
+    <meta property="og:title" content="Corax — Social Media Company" />
+    <meta
+      property="og:description"
+      content="Media, talenti e storie: costruiamo ecosistemi di intrattenimento che parlano al presente."
+    />
+    <meta property="og:image" content="https://corax.it/img/og-cover.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Corax — Social Media Company" />
+    <meta
+      name="twitter:description"
+      content="Media, talenti e storie: costruiamo ecosistemi di intrattenimento che parlano al presente."
+    />
+    <meta name="twitter:image" content="https://corax.it/img/og-cover.jpg" />
+    <!--/seo-fallback-->
+    <link rel="icon" href="/img/logomark.png" sizes="any" />
+    <link rel="apple-touch-icon" href="/img/logomark.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preload" href="/fonts/YgroSans-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/YgroSans-Book.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 721px)" />
+    <link rel="preload" href="/fonts/YgroSans-Bold.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 721px)" />
+    <script>
+      document.documentElement.classList.add("js");
+      // Failsafe: se il bundle tarda, il contenuto non resta nascosto.
+      setTimeout(function () {
+        document.querySelectorAll(".reveal:not(.is-in)").forEach(function (el) {
+          el.classList.add("is-in");
+        });
+      }, 2000);
+    </script>
+    <!--app-head-->
+  </head>
+  <body>
+    <div id="root"><!--app-html--></div>
+    <noscript>
+      <style>
+        .reveal {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .menu-toggle,
+        .cmdk-trigger {
+          display: none !important;
+        }
+      </style>
+    </noscript>
+    <script type="module" src="/src/entry-client.tsx"></script>
+  </body>
+</html>

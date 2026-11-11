@@ -1,0 +1,27 @@
+{
+  "name": "Corax — Social Media Company",
+  "short_name": "Corax",
+  "description": "Media, talenti, produzione e tecnologia. La social media company italiana dal 2020.",
+  "lang": "it",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#08070d",
+  "theme_color": "#08070d",
+  "categories": ["business", "entertainment", "news"],
+  "icons": [
+    {
+      "src": "/img/logomark.png",
+      "sizes": "300x300",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/img/logomark.png",
+      "sizes": "300x300",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
