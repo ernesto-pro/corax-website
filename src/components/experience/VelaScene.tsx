@@ -558,7 +558,11 @@ export default function VelaScene({
     } catch {
       seen = false;
     }
-    const introLength = reduced || seen ? 0 : small ? Math.round(INTRO_MS * 0.66) : INTRO_MS;
+    // On a slow connection the still has already told the story: keep the
+    // entrance short instead of making people wait twice.
+    const lateStart = performance.now() > 3200;
+    const introScale = small ? 0.66 : lateStart ? 0.5 : 1;
+    const introLength = reduced || seen ? 0 : Math.round(INTRO_MS * introScale);
     let introElapsed = 0;
     let introDone = introLength === 0;
     const finishIntro = () => {

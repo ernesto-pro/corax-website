@@ -79,7 +79,7 @@ const CHANGEFREQ = (route) => {
  * L'HTML è già completo e indicizzabile: l'idratazione React non deve competere
  * con il primo paint. Il bundle viene caricato a pagina pronta, in idle.
  */
-function deferHydration(html) {
+function deferHydration(html, eager = false) {
   return html.replace(
     /<script type="module"([^>]*?)src="([^"]+)"([^>]*)><\/script>/,
     (_match, before, src, after) =>
@@ -96,7 +96,8 @@ function deferHydration(html) {
           if (window.requestIdleCallback) window.requestIdleCallback(boot, { timeout: 1500 });
           else setTimeout(boot, 200);
         }
-        if (document.readyState === "complete") idle();
+        if (${eager ? "true" : "false"}) boot();
+        else if (document.readyState === "complete") idle();
         else window.addEventListener("load", idle, { once: true });
       })();
     </script>`,
@@ -107,9 +108,7 @@ async function main() {
   const template = await readFile(templatePath, "utf8");
   const { render, getHead, allPaths } = await import(pathToFileURL(serverEntry).href);
 
-  const cleanTemplate = deferHydration(
-    template.replace(/<!--seo-fallback-->[\s\S]*?<!--\/seo-fallback-->/g, ""),
-  );
+  const bareTemplate = template.replace(/<!--seo-fallback-->[\s\S]*?<!--\/seo-fallback-->/g, "");
 
   // The 3D atrium is the whole page on /esperienza: fetch its chunk in parallel
   // with the app bundle instead of waiting for hydration + lazy import.
@@ -123,6 +122,12 @@ async function main() {
   for (const route of allPaths) {
     const appHtml = render(route);
     const head = getHead(route);
+    // The 3D atrium is the page: hydrate as soon as the HTML is parsed instead
+    // of waiting for every image and for an idle slot.
+    const cleanTemplate = deferHydration(
+      bareTemplate,
+      route === "/esperienza" || route === "/en/experience",
+    );
     const html = cleanTemplate
       .replace(/<html lang="[^"]*"/, `<html lang="${head.lang === "en" ? "en" : "it-IT"}"`)
       .replace(
@@ -149,7 +154,7 @@ async function main() {
   }
 
   // 404 page
-  const notFoundHtml = cleanTemplate
+  const notFoundHtml = deferHydration(bareTemplate)
     .replace(/<html lang="[^"]*"/, '<html lang="it-IT"')
     .replace("<!--app-head-->", headHtml(getHead("/404"), "/404"))
     .replace("<!--app-html-->", render("/404"));
