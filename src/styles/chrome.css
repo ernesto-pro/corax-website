@@ -64,6 +64,24 @@
   opacity: 0.7;
 }
 
+.lang-switch {
+  display: inline-grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 7px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(244, 241, 234, 0.72);
+  transition: color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.lang-switch:hover {
+  color: var(--paper);
+  background: rgba(244, 241, 234, 0.08);
+}
+
 .nav {
   display: flex;
   align-items: center;
@@ -237,8 +255,14 @@
   gap: 22px;
   font-size: 13px;
 }
+.mobile-menu__foot > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
 .mobile-menu__foot .eyebrow {
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
 .mobile-menu__mail {
   font-size: 15px;
@@ -766,6 +790,65 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 14px;
+  }
+}
+
+/* Touch screens: grow the hit area of small text controls without
+   changing how they look. */
+@media (pointer: coarse) {
+  .brand {
+    min-height: 44px;
+  }
+  .lang-switch {
+    min-width: 44px;
+    height: 44px;
+  }
+  .footer__mail,
+  .footer__top,
+  .footer__socials a,
+  .arrow-link {
+    position: relative;
+  }
+  .footer__mail::after,
+  .footer__top::after,
+  .footer__socials a::after,
+  .arrow-link::after {
+    content: "";
+    position: absolute;
+    inset: -12px -6px;
+  }
+  .footer__address a,
+  .footer__top {
+    min-height: 44px;
+  }
+  .footer__col a,
+  .footer__legal a,
+  .mobile-menu__socials a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .contact__row a,
+  .contact__socials a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  /* 16px keeps iOS from zooming when a field receives focus. */
+  .field input,
+  .field select,
+  .field textarea,
+  .cmdk__search input,
+  .explorer__search input {
+    font-size: 16px;
+  }
+  .footer__col a {
+    width: 100%;
+  }
+  .mobile-menu__mail {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 }
 

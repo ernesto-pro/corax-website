@@ -560,7 +560,8 @@ html {
   font-weight: 500;
   line-height: 0.92;
   letter-spacing: -0.055em;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .stat__label {

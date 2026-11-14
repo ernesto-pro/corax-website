@@ -1157,6 +1157,7 @@
   font-weight: 500;
   line-height: 0.9;
   letter-spacing: -0.055em;
+  overflow-wrap: break-word;
 }
 .case__results-grid span {
   display: block;
@@ -1309,6 +1310,7 @@
   font-size: clamp(3.4rem, 9.4vw, 9.6rem);
   line-height: 0.88;
   letter-spacing: -0.06em;
+  overflow-wrap: break-word;
 }
 .property-hero__claim {
   max-width: 22ch;
@@ -3631,6 +3633,12 @@
   .hero__title {
     font-size: clamp(2.6rem, 13vw, 3.6rem);
   }
+  .property-hero h1 {
+    font-size: clamp(2.5rem, 11.6vw, 3.4rem);
+  }
+  .case__results-grid strong {
+    font-size: clamp(1.9rem, 7.4vw, 2.4rem);
+  }
   .hero__lede {
     font-size: 14px;
   }
@@ -3662,7 +3670,7 @@
   .service-metrics__grid,
   .property-stats,
   .case__results-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .footer__grid {
     grid-template-columns: 1fr;

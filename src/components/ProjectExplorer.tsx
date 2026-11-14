@@ -14,7 +14,7 @@ import { ProjectCard } from "./Cards";
 import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
-import { optSrc } from "../lib/img";
+import { optSrc, optSrcSet } from "../lib/img";
 
 type ViewMode = "grid" | "index";
 
@@ -202,6 +202,7 @@ export function ProjectExplorer({ limit }: { limit?: number }) {
                     <img
                       className="project-index__thumb"
                       src={optSrc(project.cover)}
+                      srcSet={optSrcSet(project.cover)}
                       alt={project.coverAlt}
                       loading="lazy"
                       decoding="async"
@@ -235,6 +236,7 @@ export function ProjectExplorer({ limit }: { limit?: number }) {
                   {preview.cover ? (
                     <img
                       src={optSrc(preview.cover)}
+                      srcSet={optSrcSet(preview.cover)}
                       alt=""
                       loading="lazy"
                       decoding="async"

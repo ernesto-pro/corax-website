@@ -1,4 +1,5 @@
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -119,6 +120,16 @@ async function main() {
     : null;
 
   let count = 0;
+  const missingAssets = new Set();
+  const checkSrcSets = (html) => {
+    for (const match of html.matchAll(/src[Ss]et="([^"]+)"/g)) {
+      for (const candidate of match[1].split(",")) {
+        const url = candidate.trim().split(/\s+/)[0];
+        if (!url.startsWith("/")) continue;
+        if (!existsSync(path.join(dist, url))) missingAssets.add(url);
+      }
+    }
+  };
   for (const route of allPaths) {
     const appHtml = render(route);
     const head = getHead(route);
@@ -135,12 +146,16 @@ async function main() {
         headHtml(
           head,
           route,
-          velaPreload && (route === "/esperienza" || route === "/en/experience")
-            ? [velaPreload]
+          route === "/esperienza" || route === "/en/experience"
+            ? [
+                ...(velaPreload ? [velaPreload] : []),
+                '<link rel="preload" as="image" href="/img/vela-poster.webp" fetchpriority="high" />',
+              ]
             : [],
         ),
       )
       .replace("<!--app-html-->", appHtml);
+    checkSrcSets(html);
 
     if (route === "/") {
       await writeFile(path.join(dist, "index.html"), html, "utf8");
@@ -196,6 +211,13 @@ Sitemap: ${base}/sitemap.xml
 Host: corax.it
 `;
   await writeFile(path.join(dist, "robots.txt"), robots, "utf8");
+
+  if (missingAssets.size) {
+    throw new Error(
+      `Missing image variants referenced by srcset:\n${[...missingAssets].slice(0, 12).join("\n")}\n` +
+        "Run `npm run covers` to regenerate the 800px WebP variants.",
+    );
+  }
 
   console.log(`✓ Prerendered ${count} routes + 404`);
   console.log(`✓ sitemap.xml (${allPaths.length - 1} URLs + hreflang), robots.txt`);

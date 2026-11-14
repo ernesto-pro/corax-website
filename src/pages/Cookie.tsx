@@ -203,7 +203,7 @@ export function Cookie() {
             )}
           </p>
           <ul>
-            <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noreferrer">Google Chrome</a></li>
+            <li><a href="https://support.google.com/chrome/answer/95647?hl=it" target="_blank" rel="noreferrer">Google Chrome</a></li>
             <li><a href="https://support.apple.com/it-it/guide/safari/sfri11471/mac" target="_blank" rel="noreferrer">Safari</a></li>
             <li><a href="https://support.mozilla.org/it/kb/protezione-antitracciamento-reni" target="_blank" rel="noreferrer">Mozilla Firefox</a></li>
             <li><a href="https://support.microsoft.com/it-it/microsoft-edge" target="_blank" rel="noreferrer">Microsoft Edge</a></li>

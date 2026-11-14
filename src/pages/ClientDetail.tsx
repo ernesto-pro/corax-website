@@ -8,7 +8,7 @@ import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
 import { NotFound } from "./NotFound";
-import { optSrc } from "../lib/img";
+import { optSrc, optSrcSet } from "../lib/img";
 
 export function ClientDetail() {
   const { slug } = useParams();
@@ -63,7 +63,13 @@ export function ClientDetail() {
 
         <div className="client-hero__visual">
           {first?.cover ? (
-            <img src={optSrc(first.cover)} alt={first.coverAlt} width={1600} height={900} />
+            <img
+              src={optSrc(first.cover)}
+              srcSet={optSrcSet(first.cover)}
+              alt={first.coverAlt}
+              width={1600}
+              height={900}
+            />
           ) : (
             <span className="client-hero__pattern" aria-hidden />
           )}

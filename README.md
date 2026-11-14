@@ -14,6 +14,7 @@ React 19 + Vite 8 + TypeScript, con prerender statico di tutte le rotte.
 npm install
 npm run dev        # sviluppo
 npm run typecheck  # controllo TypeScript
+npm run covers     # genera le copertine WebP da 800px per il mobile
 npm run build      # client + SSR + prerender (dist/)
 npm run preview    # anteprima del build su :4173
 ```
@@ -31,6 +32,12 @@ Il build genera una pagina HTML per ogni rotta in `src/data/routes.ts`, più
   contenuto è leggibile dal primo paint.
 - L'hero ha una copertina responsive (`poster-800.webp` / `poster.webp`) e su
   mobile non scarica il poster grande del video.
+- Ogni copertina editoriale ha una variante `-800.webp`: il browser sceglie
+  quella da 800px su mobile e il master da 1600px su desktop. Il build verifica
+  che tutte le varianti citate nei `srcset` esistano davvero.
+- Il build non pubblica sourcemap; i file hashati restano cacheabili a lungo.
+- Su touch screen i controlli piccoli (lingua, footer, link testuali) hanno
+  un'area di tocco di almeno 44px e i campi usano 16px per evitare lo zoom iOS.
 - Sono precaricati solo i font usati sopra la piega (Medium + Instrument Serif
   Italic); gli altri arrivano via CSS con `font-display: swap`.
 - Se il bundle tarda, un failsafe inline rende visibili le sezioni `.reveal`

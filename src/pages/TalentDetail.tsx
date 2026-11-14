@@ -7,7 +7,7 @@ import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
 import { NotFound } from "./NotFound";
-import { optSrc } from "../lib/img";
+import { optSrc, optSrcSet } from "../lib/img";
 
 export function TalentDetail() {
   const { slug } = useParams();
@@ -201,6 +201,7 @@ export function TalentDetail() {
                   <span className="talent-video__media">
                     <img
                       src={optSrc(`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`)}
+                      srcSet={optSrcSet(`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`)}
                       alt=""
                       loading="lazy"
                       decoding="async"
@@ -235,6 +236,7 @@ export function TalentDetail() {
               <span className="talent-mini__media">
                 <img
                   src={optSrc(`/img/talents/${x.slug}.jpg`)}
+                  srcSet={optSrcSet(`/img/talents/${x.slug}.jpg`)}
                   alt=""
                   loading="lazy"
                   decoding="async"

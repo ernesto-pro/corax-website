@@ -17,7 +17,7 @@ import type { VelaSpace } from "../data/experience";
 import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
-import { optSrc } from "../lib/img";
+import { optSrc, optSrcSet } from "../lib/img";
 
 const VelaScene = lazy(() => import("../components/experience/VelaScene"));
 
@@ -109,6 +109,7 @@ function SpacePanel({ space, onClose }: { space: VelaSpace; onClose: () => void 
           {space.image && (
             <img
               src={optSrc(space.image)}
+              srcSet={optSrcSet(space.image)}
               alt={space.imageAlt}
               width={1600}
               height={900}
@@ -530,6 +531,7 @@ export function Esperienza() {
                 {space.image && (
                   <img
                     src={optSrc(space.image)}
+                    srcSet={optSrcSet(space.image)}
                     alt={space.imageAlt}
                     width={1600}
                     height={900}
@@ -661,6 +663,7 @@ export function Esperienza() {
                           {project.thumb && (
                             <img
                               src={optSrc(project.thumb)}
+                              srcSet={optSrcSet(project.thumb)}
                               alt=""
                               width={96}
                               height={64}

@@ -7,7 +7,7 @@ import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
 import { NotFound } from "./NotFound";
-import { optSrc } from "../lib/img";
+import { optSrc, optSrcSet } from "../lib/img";
 
 export function PropertyDetail() {
   const content = useContent();
@@ -51,7 +51,13 @@ export function PropertyDetail() {
 
       {property.cover && (
         <figure className="property-hero__cover">
-          <img src={optSrc(property.cover)} alt={property.coverAlt} width={1600} height={900} />
+          <img
+            src={optSrc(property.cover)}
+            srcSet={optSrcSet(property.cover)}
+            alt={property.coverAlt}
+            width={1600}
+            height={900}
+          />
         </figure>
       )}
 

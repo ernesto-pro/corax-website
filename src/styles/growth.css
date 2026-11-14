@@ -873,6 +873,20 @@
 }
 
 @media (max-width: 640px) {
+  .mobile-cta__copy strong {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    line-height: 1.16;
+  }
+  .mobile-cta__copy span {
+    display: none;
+  }
+  .mobile-cta__close {
+    width: 40px;
+    height: 40px;
+  }
   .scan__panel {
     min-height: 0;
     padding: 22px 18px 26px;

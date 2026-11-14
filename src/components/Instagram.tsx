@@ -26,7 +26,7 @@ import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
 import type { Lang } from "../i18n/lang";
 import { SectionHead, useLockBody } from "./UI";
-import { optSrc } from "../lib/img";
+import { optSrc, optSrcSet } from "../lib/img";
 
 const SLIDE_MS = 6800;
 
@@ -155,6 +155,7 @@ export function StoriesRail({
                 ) : (
                   <img
                     src={optSrc(story.cover)}
+                    srcSet={optSrcSet(story.cover)}
                     alt=""
                     loading="lazy"
                     decoding="async"
@@ -335,11 +336,18 @@ function StoriesViewer({
       >
         <div className="stories__slide" key={`${story.id}-${slideIndex}`}>
           {slide.fit === "contain" && (
-            <img className="stories__bg" src={optSrc(slide.image)} alt="" aria-hidden />
+            <img
+              className="stories__bg"
+              src={optSrc(slide.image)}
+              srcSet={optSrcSet(slide.image)}
+              alt=""
+              aria-hidden
+            />
           )}
           <img
             className={`stories__img ${slide.fit === "contain" ? "is-contain" : ""}`}
             src={optSrc(slide.image)}
+            srcSet={optSrcSet(slide.image)}
             alt={slide.alt}
             width={slide.fit === "contain" ? 1600 : 1080}
             height={slide.fit === "contain" ? 900 : 1350}
@@ -476,6 +484,7 @@ export function InstaTile({
         <img
           className="insta-tile__bg"
           src={optSrc(post.image)}
+          srcSet={optSrcSet(post.image)}
           alt=""
           aria-hidden
           loading="lazy"
@@ -485,6 +494,7 @@ export function InstaTile({
       <img
         className={post.fit === "contain" ? "is-contain" : ""}
         src={optSrc(post.image)}
+        srcSet={optSrcSet(post.image)}
         alt={post.alt}
         loading="lazy"
         decoding="async"
@@ -738,6 +748,7 @@ export function InitiativeArchive({ items }: { items: Initiative[] }) {
                   {cover ? (
                     <img
                       src={optSrc(cover)}
+                      srcSet={optSrcSet(cover)}
                       alt={project?.coverAlt ?? item.title}
                       loading="lazy"
                       decoding="async"

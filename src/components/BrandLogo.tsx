@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getBrandLogo } from "../data/clients";
-import { optSrc } from "../lib/img";
+import { optSrc, optSrcSet } from "../lib/img";
 
 /** "Politecnico di Milano" → "PM", "Numero Diez" → "ND". */
 function monogramFor(name: string): string {
@@ -49,6 +49,7 @@ export function BrandLogo({
     >
       <img
         src={optSrc(logo.src)}
+        srcSet={optSrcSet(logo.src)}
         alt={decorative ? "" : name}
         loading={eager ? "eager" : "lazy"}
         decoding="async"

@@ -7,7 +7,7 @@ export default defineConfig({
     target: "es2020",
     cssCodeSplit: false,
     assetsInlineLimit: 2048,
-    sourcemap: true,
+    sourcemap: false,
   },
   server: {
     port: 5173,

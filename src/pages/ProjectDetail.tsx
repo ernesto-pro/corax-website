@@ -9,7 +9,7 @@ import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
 import { NotFound } from "./NotFound";
-import { optSrc } from "../lib/img";
+import { optSrc, optSrcSet } from "../lib/img";
 
 export function ProjectDetail() {
   const content = useContent();
@@ -67,7 +67,13 @@ export function ProjectDetail() {
 
       <figure className="case__cover">
         {project.cover ? (
-          <img src={optSrc(project.cover)} alt={project.coverAlt} width={1600} height={900} />
+          <img
+            src={optSrc(project.cover)}
+            srcSet={optSrcSet(project.cover)}
+            alt={project.coverAlt}
+            width={1600}
+            height={900}
+          />
         ) : (
           <div className="case__cover-abstract" role="img" aria-label={project.coverAlt}>
             <span>{project.title}</span>
@@ -237,7 +243,14 @@ export function ProjectDetail() {
         <section className="case__gallery">
           {project.gallery.map((img, i) => (
             <figure key={`${img.src}-${i}`} className={i === 0 ? "is-wide" : ""}>
-              <img src={optSrc(img.src)} alt={img.alt} loading="lazy" width={1600} height={900} />
+              <img
+                src={optSrc(img.src)}
+                srcSet={optSrcSet(img.src)}
+                alt={img.alt}
+                loading="lazy"
+                width={1600}
+                height={900}
+              />
             </figure>
           ))}
         </section>

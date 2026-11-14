@@ -14,7 +14,7 @@ import { CTABand, SplitStatement } from "../components/PageHero";
 import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
-import { optSrc } from "../lib/img";
+import { optSrc, optSrcSet } from "../lib/img";
 
 function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
@@ -447,6 +447,7 @@ export function Home() {
               <span className="talent-mini__media">
                 <img
                   src={optSrc(`/img/talents/${talent.slug}.jpg`)}
+                  srcSet={optSrcSet(`/img/talents/${talent.slug}.jpg`)}
                   alt=""
                   loading="lazy"
                   decoding="async"
