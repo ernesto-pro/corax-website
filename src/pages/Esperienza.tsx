@@ -279,14 +279,14 @@ export function Esperienza() {
   }, []);
 
   const status = sceneFailed
-    ? t("Modalità atlante · WebGL non disponibile")
+    ? t("Versione senza 3D · WebGL non disponibile")
     : !mounted
       ? t("Scena 3D · Gli spazi di Corax")
       : !sceneReady
         ? t("Apro la scena…")
         : !entered
           ? t("Ingresso negli spazi…")
-          : t("Scena attiva · 2 spazi · trascina per orbitare");
+          : t("Scena attiva · 2 spazi");
 
   return (
     <>
@@ -294,7 +294,7 @@ export function Esperienza() {
         className={`vela-stage${sceneReady && !sceneFailed ? " is-live" : ""}${
           activeSpace ? " has-panel" : ""
         }`}
-        id="atrio"
+        id="scena"
         aria-labelledby="vela-title"
       >
         <div className="vela-stage__bg" aria-hidden />
@@ -355,38 +355,38 @@ export function Esperienza() {
           <div className="vela-stage__brief">
             <p className="vela-stage__lede">
               {t(
-                "I due spazi di Corax ricostruiti in 3D. Il quartier generale sotto la vela bianca del Bodio Center e il laboratorio editoriale dove nascono format, palinsesti e contenuti. Muoviti intorno agli edifici, apri uno spazio.",
+                "I due spazi di Corax ricostruiti in 3D. La Vela è il quartier generale nel Bodio Center, con la tensostruttura bianca a forma di vela. Il Tempio è il laboratorio editoriale dove nascono format, palinsesti e contenuti. Muoviti intorno agli edifici e apri uno spazio.",
               )}
             </p>
-            <a className="vela-stage__skip" href="#atlante">
-              {t("Salta all'atlante testuale")} <ArrowUpRight size={14} aria-hidden />
+            <a className="vela-stage__skip" href="#contenuti">
+              {t("Vai ai contenuti")} <ArrowUpRight size={14} aria-hidden />
             </a>
             <ol className="vela-stage__guide" aria-label={t("Come funziona l'esperienza")}>
               <li>
-                <span aria-hidden>01</span> {t("Trascina per orbitare")}
+                <span aria-hidden>01</span> {t("Trascina per ruotare la scena")}
               </li>
               <li>
                 <span aria-hidden>02</span> {t("Apri uno spazio o una voce")}
               </li>
               <li>
-                <span aria-hidden>03</span> {t("Scorri per l'atlante")}
+                <span aria-hidden>03</span> {t("Scorri per i dettagli")}
               </li>
             </ol>
             <p className="vela-stage__fallback">
               {sceneFailed
                 ? t(
-                    "Il tuo browser non supporta WebGL: qui sotto trovi i due spazi e tutto il sistema in forma di atlante, senza perdere un contenuto.",
+                    "Il tuo browser non supporta la grafica 3D: qui sotto trovi gli spazi e tutte le unit in formato testo, con gli stessi contenuti.",
                   )
                 : t(
-                    "La scena è un livello espressivo. Tutto quello che vedi nello spazio è raccolto anche nell'atlante qui sotto, in forma leggibile e indicizzabile.",
+                    "Quello che vedi nella scena è raccolto anche qui sotto in testo: puoi leggerlo con calma, copiarlo e ritrovarlo nella ricerca.",
                   )}
             </p>
           </div>
         </div>
 
-        <nav className="vela-index" aria-label={t("La mappa degli spazi")}>
+        <nav className="vela-index" aria-label={t("Gli spazi di Corax")}>
           <p className="vela-index__title">
-            <span>{t("La mappa degli spazi")}</span>
+            <span>{t("Gli spazi di Corax")}</span>
             <span aria-hidden>{String(velaSpaces.length).padStart(2, "0")}</span>
           </p>
           <ul>
@@ -478,8 +478,8 @@ export function Esperienza() {
           <p className="vela-stage__hint">
             <Move size={15} strokeWidth={1.6} aria-hidden />
             {sceneReady && !sceneFailed
-              ? t("Trascina per orbitare · clicca uno spazio per la scheda")
-              : t("Scegli uno spazio · esplora l'atlante")}
+              ? t("Trascina per ruotare la scena · clicca uno spazio per la scheda")
+              : t("Scegli uno spazio e leggi i dettagli")}
           </p>
           <dl className="vela-stage__numbers">
             {velaNumbers.slice(0, 4).map((number) => (
@@ -510,11 +510,11 @@ export function Esperienza() {
               <em>{t("Una sola regia.")}</em>
             </>
           }
-          action={{ label: t("Torna alla scena"), to: "/esperienza#atrio" }}
+          action={{ label: t("Torna alla scena"), to: "/esperienza#scena" }}
         >
           <p>
             {t(
-              "La Vela e Il Tempio non sono indirizzi: sono i due poli del sistema Corax. Uno tiene insieme il quartier generale, la produzione e le unit. L'altro è il laboratorio dove l'editoria e il talent management diventano format, palinsesti e community.",
+              "La Vela e Il Tempio sono i due luoghi di Corax. La Vela è il quartier generale, dove lavorano le quattro unit e la produzione. Il Tempio è il laboratorio dove nascono editoria, format, palinsesti e contenuti per le community digitali.",
             )}
           </p>
         </SectionHead>
@@ -579,22 +579,22 @@ export function Esperienza() {
         </div>
       </section>
 
-      <section className="section section--dark vela-atlas" id="atlante">
+      <section className="section section--dark vela-atlas" id="contenuti">
         <SectionHead
           index="02"
-          label={t("Atlante del sistema")}
+          label={t("Le quattro unit")}
           title={
             <>
               {t("Quattro unit.")}
               <br />
-              <em>{t("Un solo atrio.")}</em>
+              <em>{t("Una sola azienda.")}</em>
             </>
           }
-          action={{ label: t("Torna agli spazi"), to: "/esperienza#atrio" }}
+          action={{ label: t("Torna agli spazi"), to: "/esperienza#spazi" }}
         >
           <p>
             {t(
-              "Ogni unit è un insieme di persone, competenze e casi reali. Qui trovi la mappa completa: quello che nello spazio è un movimento, qui è un elenco che puoi leggere, copiare e verificare.",
+              "Ogni unit è un insieme di persone, competenze e casi reali. Qui trovi tutto in un unico elenco: puoi leggere, copiare e verificare ogni informazione.",
             )}
           </p>
         </SectionHead>
@@ -632,7 +632,7 @@ export function Esperienza() {
 
               <div className="vela-atlas__grid">
                 <div className="vela-atlas__caps">
-                  <h4>{t("Capabilities")}</h4>
+                  <h4>{t("Competenze")}</h4>
                   <ul>
                     {unit.capabilities.map((capability) => (
                       <li key={capability.title}>{capability.title}</li>
@@ -687,7 +687,7 @@ export function Esperienza() {
           <Compass size={18} strokeWidth={1.4} aria-hidden />
           <p>
             {t(
-              "La Vela non è una metafora decorativa: è il modo in cui organizziamo il lavoro. Ogni unit è autonoma, ma condivide lo stesso atrio — e la stessa regia.",
+              "Le quattro unit lavorano in modo autonomo ma condividono spazi, persone e direzione. Qui trovi competenze, numeri e casi di ciascuna unit.",
             )}
           </p>
           <Link to={to("/sistema")} className="arrow-link">
@@ -712,7 +712,7 @@ export function Esperienza() {
         >
           <p>
             {t(
-              "Il roster non è un elenco di follower. È un insieme di voci, verticali e percorsi. Ogni nome nella Vela è una porta che apre una biografia, un property e i casi in cui quella persona ha lavorato.",
+              "Il roster non è un elenco di follower. È un insieme di persone con voci, competenze e percorsi diversi. Ogni nome porta a una biografia, alle property e ai casi seguiti.",
             )}
           </p>
         </SectionHead>
@@ -737,9 +737,9 @@ export function Esperienza() {
 
       <CTABand
         kicker={t("Dagli spazi al progetto")}
-        title={t("Hai visto il sistema. Ora accendilo.")}
+        title={t("Hai visto come lavoriamo.")}
         text={t(
-          "Raccontaci dove vuoi arrivare: ti diciamo quale unit entra in campo, con quali persone e con quale primo passo. La Vela e Il Tempio sono solo l'ingresso.",
+          "Raccontaci il tuo obiettivo: ti diciamo quale unit può seguirlo, con quali persone e quale può essere il primo passo.",
         )}
         primary={{ label: t("Parliamone"), to: "/contatti" }}
         secondary={{ label: t("Esplora i casi"), to: "/progetti" }}
