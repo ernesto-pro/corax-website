@@ -5,6 +5,26 @@ import { talents } from "./talents";
 
 export type VelaMetric = { value: string; label: string };
 
+export type VelaSpace = {
+  slug: "vela" | "tempio";
+  index: string;
+  name: string;
+  kicker: string;
+  short: string;
+  intro: string[];
+  accent: string;
+  metrics: VelaMetric[];
+  facts: { label: string; value: string }[];
+  highlights: { title: string; text: string; href: string }[];
+  links: { label: string; href: string }[];
+  image: string | null;
+  imageAlt: string;
+  imageLabel: string;
+  /** Camera framing used by the 3D scene when the space is opened. */
+  camera: { position: [number, number, number]; look: [number, number, number] };
+  scene: "vela" | "tempio";
+};
+
 export type VelaCase = {
   slug: string;
   title: string;
@@ -88,9 +108,9 @@ export const velaRoster = talents.map((talent) => ({
 }));
 
 export const velaNumbers = [
-  { value: "1.500 mq", label: "spazi a Milano" },
+  { value: "02", label: "spazi a Milano" },
+  { value: "700+ mq", label: "La Vela" },
   { value: "73", label: "persone" },
-  { value: "4", label: "unit" },
   { value: "250+", label: "progetti" },
   { value: "30 MLN+", label: "view PoretCast" },
   { value: "8 MLN", label: "fatturato 2025" },

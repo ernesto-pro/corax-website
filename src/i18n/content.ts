@@ -214,7 +214,7 @@ function buildEnglish(): Content {
         tech: mergeFocus("tech"),
       },
     },
-    vela: { units: [], roster: [], numbers: [], nodes: [] },
+    vela: { units: [], roster: [], numbers: [], nodes: [], spaces: [] },
   };
   content.vela = buildVela(content, "en");
   return content;
@@ -245,7 +245,7 @@ export function contentFor(lang: Lang): Content {
       faqs,
       company: { team, timeline, values },
       scan: { questions: scanQuestions, levels: scanLevels, focuses: scanFocuses },
-      vela: { units: [], roster: [], numbers: [], nodes: [] },
+      vela: { units: [], roster: [], numbers: [], nodes: [], spaces: [] },
     };
     content.vela = buildVela(content, "it");
     cache.it = content;

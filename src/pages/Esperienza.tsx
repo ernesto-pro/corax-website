@@ -10,10 +10,10 @@ import {
 } from "react";
 import { Link } from "react-router-dom";
 import { createPortal } from "react-dom";
-import { ArrowUpRight, Compass, Move, X } from "lucide-react";
+import { ArrowUpRight, Compass, Move, RotateCcw, X } from "lucide-react";
 import { CTABand } from "../components/PageHero";
 import { SectionHead, useLockBody } from "../components/UI";
-import type { VelaUnit } from "../data/experience";
+import type { VelaSpace } from "../data/experience";
 import { useContent, useT } from "../i18n/translate";
 import { useLang } from "../i18n/LanguageContext";
 import { localizePath } from "../i18n/routes";
@@ -40,19 +40,11 @@ class SceneBoundary extends Component<
   }
 }
 
-const unitHints: Record<string, string> = {
-  agency: "Strategia",
-  "media-house": "Produzione",
-  talent: "Roster",
-  tech: "Tecnologia",
-};
-
 function formatIndex(index: number) {
   return String(index + 1).padStart(2, "0");
 }
 
-function UnitDialog({ unit, onClose }: { unit: VelaUnit; onClose: () => void }) {
-  const content = useContent();
+function SpacePanel({ space, onClose }: { space: VelaSpace; onClose: () => void }) {
   const t = useT();
   const lang = useLang();
   const to = (path: string) => localizePath(path, lang);
@@ -91,138 +83,134 @@ function UnitDialog({ unit, onClose }: { unit: VelaUnit; onClose: () => void }) 
     return () => document.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  const titleId = `vela-unit-${unit.slug}-title`;
-  const descId = `vela-unit-${unit.slug}-desc`;
-  const rosterPreview = content.vela.roster
-    .filter((talent) => talent.featured)
-    .slice(0, 6);
+  const titleId = `space-${space.slug}-title`;
+  const descId = `space-${space.slug}-desc`;
 
   if (typeof document === "undefined") return null;
 
   return createPortal(
     <div
-      className="vela-dialog"
+      className="space-panel"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <div
-        className="vela-dialog__panel"
+      <aside
+        className="space-panel__panel"
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
         aria-describedby={descId}
         ref={panelRef}
         tabIndex={-1}
-        style={{ ["--accent" as string]: unit.accent }}
+        style={{ ["--accent" as string]: space.accent }}
       >
-        <span className="vela-dialog__beam" aria-hidden />
-
-        <div className="vela-dialog__top">
-          <span className="vela-dialog__index">{unit.index}</span>
-          <p className="vela-dialog__kicker">{unit.kicker}</p>
+        <div className="space-panel__media">
+          {space.image && (
+            <img
+              src={optSrc(space.image)}
+              alt={space.imageAlt}
+              width={1600}
+              height={900}
+              loading="eager"
+              decoding="async"
+            />
+          )}
+          <span className="space-panel__label">{space.imageLabel}</span>
           <button
             type="button"
-            className="vela-dialog__close"
+            className="space-panel__close"
             onClick={onClose}
             ref={closeRef}
-            aria-label={t("Chiudi la scheda della unit")}
+            aria-label={t("Chiudi la scheda dello spazio")}
           >
             <X size={20} strokeWidth={1.6} aria-hidden />
           </button>
         </div>
 
-        <h2 className="vela-dialog__title" id={titleId}>
-          {unit.name}
-        </h2>
-        <p className="vela-dialog__desc" id={descId}>
-          {unit.short}
-        </p>
+        <div className="space-panel__scroll">
+          <header className="space-panel__head">
+            <p className="space-panel__meta">
+              <span>{space.index}</span>
+              {space.kicker}
+            </p>
+            <h2 className="space-panel__title" id={titleId}>
+              {space.name}
+            </h2>
+            <p className="space-panel__short" id={descId}>
+              {space.short}
+            </p>
+          </header>
 
-        <dl className="vela-dialog__metrics">
-          {unit.metrics.map((metric) => (
-            <div key={metric.label}>
-              <dt>{metric.label}</dt>
-              <dd>{metric.value}</dd>
-            </div>
-          ))}
-        </dl>
+          <dl className="space-panel__metrics">
+            {space.metrics.map((metric) => (
+              <div key={metric.label}>
+                <dt>{metric.label}</dt>
+                <dd>{metric.value}</dd>
+              </div>
+            ))}
+          </dl>
 
-        <div className="vela-dialog__cols">
-          <section className="vela-dialog__block" aria-labelledby={`${titleId}-cap`}>
-            <h3 id={`${titleId}-cap`}>{t("Cosa facciamo")}</h3>
-            <ol className="vela-dialog__caps">
-              {unit.capabilities.slice(0, 4).map((capability, index) => (
-                <li key={capability.title}>
-                  <span aria-hidden>{formatIndex(index)}</span>
-                  <div>
-                    <h4>{capability.title}</h4>
-                    <p>{capability.text}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <Link to={to(unit.href)} className="vela-dialog__more" onClick={onClose}>
-              {t("Tutte le capabilities")}{" "}
-              <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden />
-            </Link>
-          </section>
+          <div className="space-panel__intro">
+            {space.intro.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
 
-          <section className="vela-dialog__block" aria-labelledby={`${titleId}-cases`}>
-            <h3 id={`${titleId}-cases`}>{t("Casi da aprire")}</h3>
-            <ul className="vela-dialog__cases">
-              {unit.cases.map((project) => (
-                <li key={project.slug}>
-                  <Link to={to(`/progetti/${project.slug}`)} onClick={onClose}>
-                    {project.thumb && (
-                      <img
-                        src={optSrc(project.thumb)}
-                        alt=""
-                        width={96}
-                        height={64}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    )}
+          <dl className="space-panel__facts">
+            {space.facts.map((fact) => (
+              <div key={fact.label}>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <section className="space-panel__block" aria-labelledby={`${titleId}-inside`}>
+            <h3 id={`${titleId}-inside`}>{t("Cosa succede qui")}</h3>
+            <ul className="space-panel__highlights">
+              {space.highlights.map((item) => (
+                <li key={item.title}>
+                  <Link to={to(item.href)} onClick={onClose}>
                     <span>
-                      <strong>{project.title}</strong>
-                      <em>{project.client}</em>
+                      <strong>{item.title}</strong>
+                      <em>{item.text}</em>
                     </span>
-                    <ArrowUpRight size={16} strokeWidth={1.5} aria-hidden />
+                    <ArrowUpRight size={15} strokeWidth={1.5} aria-hidden />
                   </Link>
                 </li>
               ))}
             </ul>
-
-            {unit.slug === "talent" && (
-              <div className="vela-dialog__roster">
-                <h4>{t("Dal roster")}</h4>
-                <ul>
-                  {rosterPreview.map((talent) => (
-                    <li key={talent.slug}>
-                      <Link to={to(`/talent/${talent.slug}`)} onClick={onClose}>
-                        {talent.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </section>
-        </div>
 
-        <div className="vela-dialog__foot">
-          <Link to={to(unit.href)} className="btn btn--light btn--sm" onClick={onClose}>
-            <span className="btn__label">{t("Scopri")} {unit.name}</span>
-            <span className="btn__icon" aria-hidden>
-              <ArrowUpRight size={16} strokeWidth={1.8} />
-            </span>
-          </Link>
-          <Link to={to("/contatti")} className="btn btn--ghost-light btn--sm" onClick={onClose}>
-            <span className="btn__label">{t("Parliamone")}</span>
-          </Link>
+          <nav className="space-panel__links" aria-label={t("Approfondisci")}>
+            {space.links.map((link) => (
+              <Link
+                key={link.href}
+                to={to(link.href)}
+                className="btn btn--ghost-light btn--sm"
+                onClick={onClose}
+              >
+                <span className="btn__label">{link.label}</span>
+              </Link>
+            ))}
+          </nav>
+
+          <div className="space-panel__foot">
+            <p>
+              {t(
+                "Vuoi vedere gli spazi dal vivo? La Vela è a Milano, nel Bodio Center.",
+              )}
+            </p>
+            <Link to={to("/contatti")} className="btn btn--light btn--sm" onClick={onClose}>
+              <span className="btn__label">{t("Parliamone")}</span>
+              <span className="btn__icon" aria-hidden>
+                <ArrowUpRight size={16} strokeWidth={1.8} />
+              </span>
+            </Link>
+          </div>
         </div>
-      </div>
+      </aside>
     </div>,
     document.body,
   );
@@ -235,10 +223,9 @@ export function Esperienza() {
   const to = (path: string) => localizePath(path, lang);
 
   const velaUnits = content.vela.units;
+  const velaSpaces = content.vela.spaces;
   const velaRoster = content.vela.roster;
   const velaNumbers = content.vela.numbers;
-  const velaSceneNodes = content.vela.nodes;
-  const getVelaUnit = (slug: string) => content.vela.units.find((u) => u.slug === slug);
 
   const [mounted, setMounted] = useState(false);
   const [sceneReady, setSceneReady] = useState(false);
@@ -253,9 +240,11 @@ export function Esperienza() {
   const skipRef = useRef<(() => void) | null>(null);
   const [hoverSlug, setHoverSlug] = useState<string | null>(null);
 
-  const activeUnit = active ? getVelaUnit(active) : undefined;
+  const activeSpace = active
+    ? velaSpaces.find((space) => space.slug === active)
+    : undefined;
 
-  useLockBody(Boolean(activeUnit));
+  useLockBody(Boolean(activeSpace));
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -267,14 +256,14 @@ export function Esperienza() {
   }, []);
 
   useEffect(() => {
-    activeRef.current = activeUnit?.slug ?? null;
-  }, [activeUnit]);
+    activeRef.current = activeSpace?.slug ?? null;
+  }, [activeSpace]);
 
-  const openUnit = useCallback((slug: string, trigger?: HTMLElement | null) => {
+  const openSpace = useCallback((slug: string, trigger?: HTMLElement | null) => {
     let target = trigger ?? null;
     if (!target) {
       const candidates = Array.from(
-        document.querySelectorAll<HTMLElement>(`[data-unit="${slug}"]`),
+        document.querySelectorAll<HTMLElement>(`[data-space="${slug}"]`),
       );
       target = candidates.find((el) => el.offsetParent !== null) ?? null;
     }
@@ -282,25 +271,29 @@ export function Esperienza() {
     setActive(slug);
   }, []);
 
-  const closeUnit = useCallback(() => {
+  const closeSpace = useCallback(() => {
     setActive(null);
+    hoverRef.current = null;
+    setHoverSlug(null);
     window.requestAnimationFrame(() => lastFocus.current?.focus({ preventScroll: true }));
   }, []);
 
   const status = sceneFailed
     ? t("Modalità atlante · WebGL non disponibile")
     : !mounted
-      ? t("Scena 3D · La Vela")
+      ? t("Scena 3D · Gli spazi di Corax")
       : !sceneReady
         ? t("Apro la scena…")
         : !entered
-          ? t("Ingresso nell'atrio…")
-          : t("Scena attiva · 4 isole · trascina per orbitare");
+          ? t("Ingresso negli spazi…")
+          : t("Scena attiva · 2 spazi · trascina per orbitare");
 
   return (
     <>
       <section
-        className={`vela-stage${sceneReady && !sceneFailed ? " is-live" : ""}`}
+        className={`vela-stage${sceneReady && !sceneFailed ? " is-live" : ""}${
+          activeSpace ? " has-panel" : ""
+        }`}
         id="atrio"
         aria-labelledby="vela-title"
       >
@@ -310,10 +303,10 @@ export function Esperienza() {
             <SceneBoundary onError={() => setSceneFailed(true)}>
               <Suspense fallback={null}>
                 <VelaScene
-                  nodes={velaSceneNodes}
+                  spaces={velaSpaces}
                   activeRef={activeRef}
                   hoverRef={hoverRef}
-                  onSelect={(slug) => openUnit(slug)}
+                  onSelect={(slug) => openSpace(slug)}
                   onHover={setHoverSlug}
                   onFail={() => setSceneFailed(true)}
                   onReady={() => setSceneReady(true)}
@@ -340,7 +333,10 @@ export function Esperienza() {
 
         <div className="vela-stage__hud">
           <span className="vela-stage__badge">
-            <span className={`vela-stage__dot ${sceneReady && !sceneFailed ? "is-live" : ""}`} aria-hidden />
+            <span
+              className={`vela-stage__dot ${sceneReady && !sceneFailed ? "is-live" : ""}`}
+              aria-hidden
+            />
             {status}
           </span>
           <span className="vela-stage__coords" aria-hidden>
@@ -349,27 +345,28 @@ export function Esperienza() {
         </div>
 
         <div className="vela-stage__intro">
-          <p className="eyebrow">{t("Esperienza immersiva · La Vela")}</p>
+          <p className="eyebrow">{t("Esperienza immersiva · Gli spazi di Corax")}</p>
           <h1 className="vela-stage__title" id="vela-title">
-            {t("Entra nella")} <em>{t("Vela.")}</em>
+            {t("La Vela.")}
+            <br />
+            <em>{t("Il Tempio.")}</em>
           </h1>
 
           <div className="vela-stage__brief">
             <p className="vela-stage__lede">
-              {t("L'atrio digitale di Corax: quattro unit,")} {velaRoster.length}{" "}
               {t(
-                "talenti e tutti i casi, disposti nello spazio come li pensiamo davvero. Muoviti, avvicinati, apri una porta.",
+                "I due spazi di Corax ricostruiti in 3D. Il quartier generale sotto la vela bianca del Bodio Center e il laboratorio editoriale dove nascono format, palinsesti e contenuti. Muoviti intorno agli edifici, apri uno spazio.",
               )}
             </p>
             <a className="vela-stage__skip" href="#atlante">
               {t("Salta all'atlante testuale")} <ArrowUpRight size={14} aria-hidden />
             </a>
-            <ol className="vela-stage__guide" aria-label={t("Come funziona l'atrio")}>
+            <ol className="vela-stage__guide" aria-label={t("Come funziona l'esperienza")}>
               <li>
                 <span aria-hidden>01</span> {t("Trascina per orbitare")}
               </li>
               <li>
-                <span aria-hidden>02</span> {t("Apri un'isola o una voce")}
+                <span aria-hidden>02</span> {t("Apri uno spazio o una voce")}
               </li>
               <li>
                 <span aria-hidden>03</span> {t("Scorri per l'atlante")}
@@ -378,7 +375,7 @@ export function Esperienza() {
             <p className="vela-stage__fallback">
               {sceneFailed
                 ? t(
-                    "Il tuo browser non supporta WebGL: qui sotto trovi tutto il sistema in forma di atlante, senza perdere un contenuto.",
+                    "Il tuo browser non supporta WebGL: qui sotto trovi i due spazi e tutto il sistema in forma di atlante, senza perdere un contenuto.",
                   )
                 : t(
                     "La scena è un livello espressivo. Tutto quello che vedi nello spazio è raccolto anche nell'atlante qui sotto, in forma leggibile e indicizzabile.",
@@ -387,62 +384,93 @@ export function Esperienza() {
           </div>
         </div>
 
-        <nav className="vela-index" aria-label={t("Le isole della Vela")}>
+        <nav className="vela-index" aria-label={t("La mappa degli spazi")}>
           <p className="vela-index__title">
-            <span>{t("La mappa dell'atrio")}</span>
-            <span aria-hidden>{String(velaUnits.length).padStart(2, "0")}</span>
+            <span>{t("La mappa degli spazi")}</span>
+            <span aria-hidden>{String(velaSpaces.length).padStart(2, "0")}</span>
           </p>
           <ul>
-            {velaUnits.map((unit) => (
-              <li key={unit.slug}>
-                <Link
-                  to={to(unit.href)}
-                  className={`vela-index__row ${hoverSlug === unit.slug ? "is-hot" : ""}`}
-                  style={{ ["--accent" as string]: unit.accent }}
-                  data-unit={unit.slug}
-                  onPointerEnter={() => {
-                    hoverRef.current = unit.slug;
-                  }}
-                  onPointerLeave={() => {
-                    hoverRef.current = null;
-                  }}
+            {velaSpaces.map((space) => (
+              <li
+                key={space.slug}
+                className={`vela-index__row ${hoverSlug === space.slug ? "is-hot" : ""} ${
+                  active === space.slug ? "is-open" : ""
+                }`}
+                style={{ ["--accent" as string]: space.accent }}
+                onPointerEnter={() => {
+                  hoverRef.current = space.slug;
+                  setHoverSlug(space.slug);
+                }}
+                onPointerLeave={() => {
+                  hoverRef.current = null;
+                  setHoverSlug(null);
+                }}
+              >
+                <button
+                  type="button"
+                  className="vela-index__open"
+                  data-space={space.slug}
+                  onClick={(event) => openSpace(space.slug, event.currentTarget)}
+                  aria-expanded={active === space.slug}
+                  aria-controls={active === space.slug ? `space-${space.slug}-title` : undefined}
                   onFocus={() => {
-                    hoverRef.current = unit.slug;
+                    hoverRef.current = space.slug;
+                    setHoverSlug(space.slug);
                   }}
                   onBlur={() => {
                     hoverRef.current = null;
+                    setHoverSlug(null);
                   }}
                 >
-                  <span className="vela-index__num">{unit.index}</span>
+                  <span className="vela-index__num">{space.index}</span>
                   <span className="vela-index__body">
-                    <strong>{unit.name}</strong>
-                    <em>{unitHints[unit.slug] ? t(unitHints[unit.slug]) : unit.kicker}</em>
+                    <strong>{space.name}</strong>
+                    <em>{space.kicker}</em>
                   </span>
+                </button>
+                <Link
+                  to={to(space.links[0].href)}
+                  className="vela-index__go"
+                  aria-label={`${space.links[0].label} — ${space.name}`}
+                  onFocus={() => {
+                    hoverRef.current = space.slug;
+                    setHoverSlug(space.slug);
+                  }}
+                  onBlur={() => {
+                    hoverRef.current = null;
+                    setHoverSlug(null);
+                  }}
+                >
                   <ArrowUpRight size={15} strokeWidth={1.5} aria-hidden />
                 </Link>
               </li>
             ))}
           </ul>
+          <button type="button" className="vela-index__reset" onClick={closeSpace}>
+            <RotateCcw size={13} strokeWidth={1.6} aria-hidden />
+            {t("Vista d'insieme")}
+          </button>
           <p className="vela-index__hint">
-            {t("Le voci aprono la pagina. Le isole aprono la scheda.")}
+            {t("La voce apre la scheda. La freccia porta alla pagina.")}
           </p>
         </nav>
 
-        <div className="vela-stage__units" aria-label={t("Le quattro unit")}>
-          {velaUnits.map((unit) => (
-            <a
-              key={unit.slug}
-              href={to(unit.href)}
+        <div className="vela-stage__units" aria-label={t("Gli spazi di Corax")}>
+          {velaSpaces.map((space) => (
+            <button
+              key={space.slug}
+              type="button"
               className="vela-mobile-unit"
-              style={{ ["--accent" as string]: unit.accent }}
-              aria-label={`${t("Vai a")} ${unit.name} — ${unit.kicker}`}
-              data-unit={unit.slug}
+              style={{ ["--accent" as string]: space.accent }}
+              onClick={(event) => openSpace(space.slug, event.currentTarget)}
+              data-space={space.slug}
+              aria-expanded={active === space.slug}
             >
-              <span className="vela-mobile-unit__index">{unit.index}</span>
-              <span className="vela-mobile-unit__name">{unit.name}</span>
-              <span className="vela-mobile-unit__kicker">{unit.kicker}</span>
+              <span className="vela-mobile-unit__index">{space.index}</span>
+              <span className="vela-mobile-unit__name">{space.name}</span>
+              <span className="vela-mobile-unit__kicker">{space.kicker}</span>
               <ArrowUpRight size={16} strokeWidth={1.5} aria-hidden />
-            </a>
+            </button>
           ))}
         </div>
 
@@ -450,8 +478,8 @@ export function Esperienza() {
           <p className="vela-stage__hint">
             <Move size={15} strokeWidth={1.6} aria-hidden />
             {sceneReady && !sceneFailed
-              ? t("Trascina per orbitare · clicca un'isola per la scheda")
-              : t("Scegli una unit · esplora l'atlante")}
+              ? t("Trascina per orbitare · clicca uno spazio per la scheda")
+              : t("Scegli uno spazio · esplora l'atlante")}
           </p>
           <dl className="vela-stage__numbers">
             {velaNumbers.slice(0, 4).map((number) => (
@@ -465,29 +493,108 @@ export function Esperienza() {
 
         {mounted && !sceneReady && !sceneFailed && (
           <div className="vela-stage__loading" role="status" aria-live="polite">
-            <span>{t("Apro la Vela")}</span>
+            <span>{t("Apro gli spazi")}</span>
             <span className="vela-stage__bar" aria-hidden />
           </div>
         )}
+      </section>
 
+      <section className="section section--dark vela-spaces" id="spazi">
+        <SectionHead
+          index="01"
+          label={t("Gli spazi")}
+          title={
+            <>
+              {t("Due luoghi.")}
+              <br />
+              <em>{t("Una sola regia.")}</em>
+            </>
+          }
+          action={{ label: t("Torna alla scena"), to: "/esperienza#atrio" }}
+        >
+          <p>
+            {t(
+              "La Vela e Il Tempio non sono indirizzi: sono i due poli del sistema Corax. Uno tiene insieme il quartier generale, la produzione e le unit. L'altro è il laboratorio dove l'editoria e il talent management diventano format, palinsesti e community.",
+            )}
+          </p>
+        </SectionHead>
+
+        <div className="vela-spaces__grid">
+          {velaSpaces.map((space) => (
+            <article
+              className="space-card"
+              key={space.slug}
+              style={{ ["--accent" as string]: space.accent }}
+            >
+              <div className="space-card__media">
+                {space.image && (
+                  <img
+                    src={optSrc(space.image)}
+                    alt={space.imageAlt}
+                    width={1600}
+                    height={900}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                <span className="space-card__index">{space.index}</span>
+                <span className="space-card__label">{space.imageLabel}</span>
+              </div>
+              <div className="space-card__body">
+                <p className="eyebrow">{space.kicker}</p>
+                <h3>{space.name}</h3>
+                <p className="space-card__short">{space.short}</p>
+                <dl className="space-card__metrics">
+                  {space.metrics.map((metric) => (
+                    <div key={metric.label}>
+                      <dt>{metric.label}</dt>
+                      <dd>{metric.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <div className="space-card__links">
+                  {space.links.slice(0, 2).map((link) => (
+                    <Link key={link.href} to={to(link.href)} className="arrow-link">
+                      <span>{link.label}</span>
+                      <ArrowUpRight size={16} strokeWidth={1.6} aria-hidden />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="vela-spaces__note">
+          <Compass size={18} strokeWidth={1.4} aria-hidden />
+          <p>
+            {t(
+              "Entrambi gli spazi sono a Milano. La Vela è nel Bodio Center, in Viale Bodio 29/37: è l'indirizzo del quartier generale e il punto di partenza per conoscere il sistema.",
+            )}
+          </p>
+          <Link to={to("/contatti")} className="arrow-link">
+            <span>{t("Vieni a trovarci")}</span>
+            <ArrowUpRight size={18} strokeWidth={1.6} aria-hidden />
+          </Link>
+        </div>
       </section>
 
       <section className="section section--dark vela-atlas" id="atlante">
         <SectionHead
-          index="01"
+          index="02"
           label={t("Atlante del sistema")}
           title={
             <>
-              {t("Quattro isole.")}
+              {t("Quattro unit.")}
               <br />
               <em>{t("Un solo atrio.")}</em>
             </>
           }
-          action={{ label: t("Torna all'atrio"), to: "/esperienza#atrio" }}
+          action={{ label: t("Torna agli spazi"), to: "/esperienza#atrio" }}
         >
           <p>
             {t(
-              "Ogni isola della Vela è una unit con persone, competenze e casi reali. Qui trovi la mappa completa: quello che nello spazio è un movimento, qui è un elenco che puoi leggere, copiare e verificare.",
+              "Ogni unit è un insieme di persone, competenze e casi reali. Qui trovi la mappa completa: quello che nello spazio è un movimento, qui è un elenco che puoi leggere, copiare e verificare.",
             )}
           </p>
         </SectionHead>
@@ -592,7 +699,7 @@ export function Esperienza() {
 
       <section className="section section--lavender vela-roster">
         <SectionHead
-          index="02"
+          index="03"
           label={t("Roster")}
           title={
             <>
@@ -629,16 +736,16 @@ export function Esperienza() {
       </section>
 
       <CTABand
-        kicker={t("Dall'atrio al progetto")}
+        kicker={t("Dagli spazi al progetto")}
         title={t("Hai visto il sistema. Ora accendilo.")}
         text={t(
-          "Raccontaci dove vuoi arrivare: ti diciamo quale unit entra in campo, con quali persone e con quale primo passo. La Vela è solo l'ingresso.",
+          "Raccontaci dove vuoi arrivare: ti diciamo quale unit entra in campo, con quali persone e con quale primo passo. La Vela e Il Tempio sono solo l'ingresso.",
         )}
         primary={{ label: t("Parliamone"), to: "/contatti" }}
         secondary={{ label: t("Esplora i casi"), to: "/progetti" }}
       />
 
-      {activeUnit && <UnitDialog unit={activeUnit} onClose={closeUnit} />}
+      {activeSpace && <SpacePanel space={activeSpace} onClose={closeSpace} />}
     </>
   );
 }

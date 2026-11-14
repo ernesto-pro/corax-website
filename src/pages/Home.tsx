@@ -290,33 +290,33 @@ export function Home() {
           <span className="vela-band__grid" aria-hidden />
           <span className="vela-band__orb" aria-hidden />
           <div className="vela-band__body">
-            <span className="eyebrow">{t("Esperienza 3D · La Vela")}</span>
+            <span className="eyebrow">{t("Esperienza 3D · Gli spazi di Corax")}</span>
             <h3 id="vela-band-title">
-              {t("Entra nella")} <em>{t("Vela.")}</em>
+              {t("La Vela.")} <em>{t("Il Tempio.")}</em>
             </h3>
             <p>
               {t(
-                "L'atrio digitale di Corax: quattro isole, il roster e i casi intorno a un unico core. Il sistema, da dentro.",
+                "I due spazi di Corax ricostruiti in 3D: il quartier generale sotto la vela bianca del Bodio Center e il laboratorio editoriale dove nascono format, palinsesti e contenuti.",
               )}
             </p>
           </div>
           <div className="vela-band__side">
             <dl className="vela-band__meta">
               <div>
-                <dt>4</dt>
-                <dd>{t("unit")}</dd>
+                <dt>02</dt>
+                <dd>{t("spazi")}</dd>
               </div>
               <div>
-                <dt>{content.talents.length}</dt>
-                <dd>{t("talenti")}</dd>
+                <dt>700+</dt>
+                <dd>{t("mq · La Vela")}</dd>
               </div>
               <div>
-                <dt>{content.projects.length}</dt>
-                <dd>{t("casi")}</dd>
+                <dt>73</dt>
+                <dd>{t("persone")}</dd>
               </div>
             </dl>
             <span className="vela-band__cta">
-              {t("Entra nella Vela")} <ArrowUpRight size={15} strokeWidth={1.8} aria-hidden />
+              {t("Entra negli spazi")} <ArrowUpRight size={15} strokeWidth={1.8} aria-hidden />
             </span>
           </div>
         </Link>

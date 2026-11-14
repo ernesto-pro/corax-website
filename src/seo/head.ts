@@ -576,32 +576,35 @@ export function getHead(rawPath: string): HeadData {
     return base({
       ...staticMeta(
         "/esperienza",
-        "Esperienza 3D — Entra nella Vela | Corax",
-        `L'atrio digitale di Corax: quattro unit, ${content.vela.roster.length} talenti e tutti i casi in una scena 3D navigabile. Entra nella Vela e guarda il sistema da dentro.`,
+        "Esperienza 3D — La Vela e Il Tempio | Corax",
+        `I due spazi di Corax ricostruiti in 3D: La Vela, il quartier generale da oltre 700 mq nel Bodio Center, e Il Tempio, il laboratorio editoriale e di talent management. Esplora la scena e apri ogni spazio.`,
       ),
       jsonLd: [
         {
           "@type": "WebPage",
           "@id": `${BASE}${path}#webpage`,
           url: `${BASE}${path}`,
-          name: lang === "en" ? "3D Experience — La Vela by Corax" : "Esperienza 3D — La Vela di Corax",
+          name:
+            lang === "en"
+              ? "3D Experience — La Vela and Il Tempio by Corax"
+              : "Esperienza 3D — La Vela e Il Tempio di Corax",
           description:
             lang === "en"
-              ? "Interactive three-dimensional scene with the four Corax units, the roster and portfolio cases."
-              : "Scena tridimensionale interattiva con le quattro unit di Corax, il roster e i casi portfolio.",
+              ? "Interactive three-dimensional scene with Corax's two spaces: La Vela, the headquarters in the Bodio Center, and Il Tempio, the editorial and talent lab."
+              : "Scena tridimensionale interattiva con i due spazi di Corax: La Vela, il quartier generale nel Bodio Center, e Il Tempio, il laboratorio editoriale e di talent.",
           isPartOf: { "@id": `${BASE}/#website` },
           about: { "@id": `${BASE}/#organization` },
           inLanguage: htmlLang[lang],
           mainEntity: {
             "@type": "ItemList",
-            name: lang === "en" ? "The islands of La Vela" : "Le isole della Vela",
-            numberOfItems: content.vela.units.length,
-            itemListElement: content.vela.units.map((unit, index) => ({
+            name: lang === "en" ? "The spaces of Corax" : "Gli spazi di Corax",
+            numberOfItems: content.vela.spaces.length,
+            itemListElement: content.vela.spaces.map((space, index) => ({
               "@type": "ListItem",
               position: index + 1,
-              name: unit.name,
-              description: unit.kicker,
-              url: `${BASE}${localizePath(unit.href, lang)}`,
+              name: space.name,
+              description: space.kicker,
+              url: `${BASE}${path}#spazi`,
             })),
           },
           mentions: content.vela.roster.slice(0, 16).map((talent0) => ({

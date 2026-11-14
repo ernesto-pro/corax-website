@@ -57,14 +57,15 @@ export const homeCopy: Record<string, string> = {
   "Tutto il sistema": "The whole system",
   "Agenzia, produzione, talenti e tecnologia non sono reparti separati: sono parti dello stesso organismo. È così che una campagna diventa un format, un format diventa una property, una property diventa un ecosistema.":
     "Agency, production, talent and technology are not separate departments: they are parts of the same organism. That's how a campaign becomes a format, a format becomes a property, a property becomes an ecosystem.",
-  "Esperienza 3D · La Vela": "3D experience · La Vela",
-  "Entra nella": "Step into",
-  "Vela.": "La Vela.",
-  "L'atrio digitale di Corax: quattro isole, il roster e i casi intorno a un unico core. Il sistema, da dentro.":
-    "Corax's digital atrium: four islands, the roster and every case around a single core. The system, from the inside.",
-  "Entra nella Vela": "Enter La Vela",
-  unit: "units",
-  talenti: "talents",
+  "Esperienza 3D · Gli spazi di Corax": "3D experience · Corax's spaces",
+  "La Vela.": "La Vela.",
+  "Il Tempio.": "Il Tempio.",
+  "I due spazi di Corax ricostruiti in 3D: il quartier generale sotto la vela bianca del Bodio Center e il laboratorio editoriale dove nascono format, palinsesti e contenuti.":
+    "Corax's two spaces rebuilt in 3D: the headquarters under the white sail of the Bodio Center and the editorial lab where formats, schedules and content are born.",
+  spazi: "spaces",
+  "mq · La Vela": "sqm · La Vela",
+  persone: "people",
+  "Entra negli spazi": "Enter the spaces",
   casi: "cases",
   "Non aspettiamo i trend.": "We don't wait for trends.",
   "Li costruiamo.": "We build them.",

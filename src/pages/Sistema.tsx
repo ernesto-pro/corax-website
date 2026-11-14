@@ -185,7 +185,7 @@ export function Sistema() {
         text={t(
           "Che tu abbia bisogno di una campagna, di un format o di un partner editoriale, la porta d'ingresso è sempre la stessa.",
         )}
-        secondary={{ label: t("Entra nella Vela 3D"), to: "/esperienza" }}
+        secondary={{ label: t("Entra negli spazi 3D"), to: "/esperienza" }}
       />
     </>
   );

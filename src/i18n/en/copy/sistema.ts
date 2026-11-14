@@ -56,5 +56,5 @@ export const sistemaCopy: Record<string, string> = {
   "Una regia sola, per tutto il sistema.": "One direction, across the whole system.",
   "Che tu abbia bisogno di una campagna, di un format o di un partner editoriale, la porta d'ingresso è sempre la stessa.":
     "Whether you need a campaign, a format or an editorial partner, the door is always the same.",
-  "Entra nella Vela 3D": "Enter the 3D Vela",
+  "Entra negli spazi 3D": "Enter the 3D spaces",
 };
